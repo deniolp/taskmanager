@@ -2,6 +2,12 @@
 
 const FILTER_NAMES = [`All`, `Overdue`, `Today`, `Favorites`, `Repeating`, `Tags`, `Archive`];
 
+const getRandomNumber = (first = 0, second = 20) => {
+  const min = Math.floor(first);
+  const max = Math.ceil(second);
+  return Math.round(Math.random() * (max - min) + min);
+};
+
 const getFilterElement = (name, amount, isChecked = false, isDisabled = false) => `
   <input type="radio" id="filter__${name.toLowerCase}" class="filter__input visually-hidden" name="filter" ${isChecked ? ` checked` : ``} ${isDisabled ? ` disabled` : ``}/>
   <label for="filter__${name.toLowerCase}" class="filter__label"> ${name.toUpperCase} <span class="filter__${name.toLowerCase}-count">${amount}</span>
