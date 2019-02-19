@@ -1,12 +1,14 @@
 'use strict';
 
+const FILTER_NAMES = [`All`, `Overdue`, `Today`, `Favorites`, `Repeating`, `Tags`, `Archive`];
+
 const getFilterElement = (name, amount, isChecked = false, isDisabled = false) => `
   <input type="radio" id="filter__${name.toLowerCase}" class="filter__input visually-hidden" name="filter" ${isChecked ? ` checked` : ``} ${isDisabled ? ` disabled` : ``}/>
   <label for="filter__${name.toLowerCase}" class="filter__label"> ${name.toUpperCase} <span class="filter__${name.toLowerCase}-count">${amount}</span>
   </label>
 `;
 
-const get cardElement = () => `
+const getcardElement = () => `
 <article class="card card--yellow card--deadline">
 <form class="card__form" method="get">
   <div class="card__inner">
