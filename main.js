@@ -353,3 +353,14 @@ FILTERS.forEach((item) => filtersContainer.appendChild(getFilterElement(item.nam
 for (let i = 0; i < 7; i++) {
   cardsContainer.appendChild(getCardElement());
 }
+
+const filters = filtersContainer.querySelectorAll(`.filter__input:not([disabled]) + label`);
+
+filters.forEach((item) => item.addEventListener(`click`, () => {
+  const tempAmount = item.textContent.match(/\d+/)[0];
+  cardsContainer.innerHTML = ``;
+
+  for (let i = 0; i < tempAmount; i++) {
+    cardsContainer.appendChild(getCardElement());
+  }
+}));
