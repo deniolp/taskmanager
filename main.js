@@ -1,6 +1,6 @@
 'use strict';
 
-const FILTER_NAMES = [
+const FILTERS = [
   {
     name: `All`,
     isChecked: true
@@ -44,7 +44,7 @@ const getFilterElement = (name, amount, isChecked = false, isDisabled = false) =
   return filterTemplate.content.cloneNode(true);
 };
 
-const getcardElement = () => {
+const getCardElement = () => {
   const cardMarkdown = `
   <article class="card card--yellow card--deadline">
   <form class="card__form" method="get">
@@ -346,5 +346,10 @@ const getcardElement = () => {
 };
 
 const filtersContainer = document.querySelector(`.main__filter`);
+const cardsContainer = document.querySelector(`.board__tasks`);
 
-FILTER_NAMES.forEach((item) => filtersContainer.appendChild(getFilterElement(item.name, getRandomNumber(), item.isChecked, item.isDisabled)));
+FILTERS.forEach((item) => filtersContainer.appendChild(getFilterElement(item.name, getRandomNumber(), item.isChecked, item.isDisabled)));
+
+for (let i = 0; i < 7; i++) {
+  cardsContainer.appendChild(getCardElement());
+}
