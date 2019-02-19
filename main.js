@@ -8,11 +8,16 @@ const getRandomNumber = (first = 0, second = 20) => {
   return Math.round(Math.random() * (max - min) + min);
 };
 
-const getFilterElement = (name, amount, isChecked = false, isDisabled = false) => `
-  <input type="radio" id="filter__${name.toLowerCase}" class="filter__input visually-hidden" name="filter" ${isChecked ? ` checked` : ``} ${isDisabled ? ` disabled` : ``}/>
-  <label for="filter__${name.toLowerCase}" class="filter__label"> ${name.toUpperCase} <span class="filter__${name.toLowerCase}-count">${amount}</span>
-  </label>
+const getFilterElement = (name, amount, isChecked = false, isDisabled = false) => {
+  const filterMarkdown = `
+    <input type="radio" id="filter__${name.toLowerCase()}" class="filter__input visually-hidden" name="filter" ${isChecked ? ` checked` : ``} ${isDisabled ? ` disabled` : ``}/>
+    <label for="filter__${name.toLowerCase()}" class="filter__label"> ${name.toUpperCase()} <span class="filter__${name.toLowerCase()}-count">${amount}</span>
+    </label>
 `;
+  const filterTemplate = document.createElement(`template`);
+  filterTemplate.innerHTML = filterMarkdown;
+  return filterTemplate.content.cloneNode(true);
+};
 
 const getcardElement = () => `
 <article class="card card--yellow card--deadline">
@@ -308,3 +313,7 @@ This is card with missing deadline</textarea
 </form>
 </article>
 `;
+
+const filtersContainer = document.querySelector(`.main__filter`);
+
+FILTER_NAMES.forEach((item) => filtersContainer.appendChild(getFilterElement(item, getRandomNumber())));
