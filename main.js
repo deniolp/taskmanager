@@ -1,6 +1,31 @@
 'use strict';
 
-const FILTER_NAMES = [`All`, `Overdue`, `Today`, `Favorites`, `Repeating`, `Tags`, `Archive`];
+const FILTER_NAMES = [
+  {
+    name: `All`,
+    isChecked: true
+  },
+  {
+    name: `Overdue`,
+    isDisabled: true
+  },
+  {
+    name: `Today`,
+    isDisabled: true
+  },
+  {
+    name: `Favorites`
+  },
+  {
+    name: `Repeating`
+  },
+  {
+    name: `Tags`
+  },
+  {
+    name: `Archive`
+  }
+];
 
 const getRandomNumber = (first = 0, second = 20) => {
   const min = Math.floor(first);
@@ -322,4 +347,4 @@ const getcardElement = () => {
 
 const filtersContainer = document.querySelector(`.main__filter`);
 
-FILTER_NAMES.forEach((item) => filtersContainer.appendChild(getFilterElement(item, getRandomNumber())));
+FILTER_NAMES.forEach((item) => filtersContainer.appendChild(getFilterElement(item.name, getRandomNumber(), item.isChecked, item.isDisabled)));
