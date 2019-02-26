@@ -1,6 +1,6 @@
 export default (task) => {
   const cardMarkdown = `
-  <article class="card card--yellow card--deadline">
+  <article class="card card--${[...task.color][Math.floor(Math.random() * 5)]}">
   <form class="card__form" method="get">
     <div class="card__inner">
       <div class="card__control">
