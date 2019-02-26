@@ -33,7 +33,7 @@ const makeTask = (task) => {
             placeholder="Start typing your text here..."
             name="text"
           >
-  This is card with missing deadline</textarea
+  ${task.title}</textarea
           >
         </label>
       </div>
