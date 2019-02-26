@@ -1,7 +1,7 @@
 import getHashtags from './get-hashtags';
 import utils from '../src/utils';
 
-const makeTask = (task) => {
+export default (task) => {
   const cardMarkdown = `
   <article class="card card--${[...task.color][utils.getRandomNumber(0, 5)]} ${utils.isRepeated(task.repeatingDays) ? `card--repeat` : ``}">
   <form class="card__form" method="get">
@@ -258,5 +258,3 @@ const makeTask = (task) => {
   cardTemplate.innerHTML = cardMarkdown;
   return cardTemplate.content.cloneNode(true);
 };
-
-export {makeTask};
