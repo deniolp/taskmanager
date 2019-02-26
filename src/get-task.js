@@ -19,13 +19,13 @@ export default () => ({
     `work`,
   ]),
   picture: `http://picsum.photos/100/100?r=${Math.random()}`,
-  color: new Set([
+  color: [
     `black`,
     `yellow`,
     `blue`,
     `green`,
     `pink`,
-  ]),
+  ][utils.getRandomNumber(0, 4)],
   repeatingDays: {
     'mo': true,
     'tu': false,

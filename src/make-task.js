@@ -5,7 +5,7 @@ import utils from '../src/utils';
 
 export default (task) => {
   const cardMarkdown = `
-  <article class="card card--${[...task.color][utils.getRandomNumber(0, 5)]} ${utils.isRepeated(task.repeatingDays) ? `card--repeat` : ``}">
+  <article class="card card--${task.color} ${utils.isRepeated(task.repeatingDays) ? `card--repeat` : ``}">
   <form class="card__form" method="get">
     <div class="card__inner">
       <div class="card__control">
