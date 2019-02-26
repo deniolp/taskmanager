@@ -3,5 +3,6 @@ export default {
     const min = Math.floor(first);
     const max = Math.ceil(second);
     return Math.round(Math.random() * (max - min) + min);
-  }
+  },
+  isRepeated: (obj) => Object.values(obj).find((item) => item === true),
 };

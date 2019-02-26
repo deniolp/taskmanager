@@ -1,10 +1,9 @@
 import getHashtags from './get-hashtags';
-
-const isRepeated = (obj) => Object.values(obj).find((item) => item === true);
+import utils from '../src/utils';
 
 const makeTask = (task) => {
   const cardMarkdown = `
-  <article class="card card--${[...task.color][Math.floor(Math.random() * 5)]} ${isRepeated(task.repeatingDays) ? `card--repeat` : ``}">
+  <article class="card card--${[...task.color][Math.floor(Math.random() * 5)]} ${utils.isRepeated(task.repeatingDays) ? `card--repeat` : ``}">
   <form class="card__form" method="get">
     <div class="card__inner" style="background-image: url(${task.picture}); background-size: cover">
       <div class="card__control">
