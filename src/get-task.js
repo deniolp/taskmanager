@@ -1,4 +1,4 @@
-const task = {
+export default () => ({
   title: [
     `Изучить теорию`,
     `Сделать домашку`,
@@ -33,4 +33,4 @@ const task = {
   },
   isFavorite: true,
   isDone: false,
-};
+});

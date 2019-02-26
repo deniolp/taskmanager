@@ -1,5 +1,6 @@
-import makeFilter from '../src/make-filter.js';
-import makeTask from '../src/make-task.js';
+import makeFilter from '../src/make-filter';
+import makeTask from '../src/make-task';
+import getTask from '../src/get-task';
 
 const FILTERS = [
   {
@@ -40,7 +41,7 @@ const cardsContainer = document.querySelector(`.board__tasks`);
 FILTERS.forEach((item) => filtersContainer.appendChild(makeFilter(item.name, getRandomNumber(), item.isChecked, item.isDisabled)));
 
 for (let i = 0; i < 7; i++) {
-  cardsContainer.appendChild(makeTask());
+  cardsContainer.appendChild(makeTask(getTask()));
 }
 
 const filters = filtersContainer.querySelectorAll(`.filter__input:not([disabled]) + label`);
@@ -50,6 +51,6 @@ filters.forEach((item) => item.addEventListener(`click`, () => {
   cardsContainer.innerHTML = ``;
 
   for (let i = 0; i < tempAmount; i++) {
-    cardsContainer.appendChild(makeTask());
+    cardsContainer.appendChild(makeTask(getTask()));
   }
 }));

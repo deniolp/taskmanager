@@ -1,4 +1,4 @@
-export default () => {
+export default (task) => {
   const cardMarkdown = `
   <article class="card card--yellow card--deadline">
   <form class="card__form" method="get">
