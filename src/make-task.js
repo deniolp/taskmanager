@@ -2,7 +2,6 @@ import getHashtags from './get-hashtags';
 import utils from '../src/utils';
 
 const makeTask = (task) => {
-  console.log(task.picture);
   const cardMarkdown = `
   <article class="card card--${[...task.color][utils.getRandomNumber(0, 5)]} ${utils.isRepeated(task.repeatingDays) ? `card--repeat` : ``}">
   <form class="card__form" method="get">
@@ -47,7 +46,7 @@ const makeTask = (task) => {
               date: <span class="card__date-status">no</span>
             </button>
 
-            <fieldset class="card__date-deadline" ${task.dueDate ? `disabled` : ``}>
+            <fieldset class="card__date-deadline" ${task.dueDate ? `` : `disabled`}>
               <label class="card__input-deadline-wrap">
                 <input
                   class="card__date"
