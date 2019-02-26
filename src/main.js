@@ -1,5 +1,5 @@
 import makeFilter from '../src/make-filter';
-import makeTask from '../src/make-task';
+import {makeTask} from '../src/make-task';
 import getTask from '../src/get-task';
 
 const FILTERS = [

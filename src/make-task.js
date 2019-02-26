@@ -1,6 +1,8 @@
-export default (task) => {
+const isRepeated = (obj) => Object.values(obj).find((item) => item === true);
+
+const makeTask = (task) => {
   const cardMarkdown = `
-  <article class="card card--${[...task.color][Math.floor(Math.random() * 5)]}">
+  <article class="card card--${[...task.color][Math.floor(Math.random() * 5)]} ${isRepeated(task.repeatingDays) ? `card--repeat` : ``}">
   <form class="card__form" method="get">
     <div class="card__inner">
       <div class="card__control">
@@ -298,3 +300,5 @@ export default (task) => {
   cardTemplate.innerHTML = cardMarkdown;
   return cardTemplate.content.cloneNode(true);
 };
+
+export {makeTask};
