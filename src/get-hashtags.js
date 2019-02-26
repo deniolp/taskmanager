@@ -1,5 +1,7 @@
+import utils from '../src/utils';
+
 export default (tags) => {
-  return tags.splice(Math.floor(Math.random() * tags.length + 1), 3).map((item) => {
+  return tags.splice(utils.getRandomNumber(0, tags.length + 1), 3).map((item) => {
     return `
     <span class="card__hashtag-inner">
       <input

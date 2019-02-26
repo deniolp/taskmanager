@@ -1,10 +1,12 @@
+import utils from '../src/utils';
+
 export default () => ({
   title: [
     `Изучить теорию`,
     `Сделать домашку`,
     `Пройти интенсив на соточку`,
-  ][Math.floor(Math.random() * 3)],
-  dueDate: Date.now() + 1 + Math.floor(Math.random() * 7) * 24 * 60 * 60 * 1000,
+  ][utils.getRandomNumber(0, 2)],
+  dueDate: Date.now() + 1 + utils.getRandomNumber(0, 7) * 24 * 60 * 60 * 1000,
   tags: new Set([
     `homework`,
     `theory`,

@@ -1,6 +1,7 @@
 import makeFilter from '../src/make-filter';
 import {makeTask} from '../src/make-task';
 import getTask from '../src/get-task';
+import utils from '../src/utils';
 
 const FILTERS = [
   {
@@ -29,16 +30,10 @@ const FILTERS = [
   }
 ];
 
-const getRandomNumber = (first = 0, second = 20) => {
-  const min = Math.floor(first);
-  const max = Math.ceil(second);
-  return Math.round(Math.random() * (max - min) + min);
-};
-
 const filtersContainer = document.querySelector(`.main__filter`);
 const cardsContainer = document.querySelector(`.board__tasks`);
 
-FILTERS.forEach((item) => filtersContainer.appendChild(makeFilter(item.name, getRandomNumber(), item.isChecked, item.isDisabled)));
+FILTERS.forEach((item) => filtersContainer.appendChild(makeFilter(item.name, utils.getRandomNumber(), item.isChecked, item.isDisabled)));
 
 for (let i = 0; i < 7; i++) {
   cardsContainer.appendChild(makeTask(getTask()));
