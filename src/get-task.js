@@ -1,5 +1,7 @@
 import utils from '../src/utils';
 
+// Здесь структура данных для одного объекта таска
+
 export default () => ({
   title: [
     `Изучить теорию`,

@@ -1,6 +1,8 @@
 import getHashtags from './get-hashtags';
 import utils from '../src/utils';
 
+// Здесь я соединяю верстку с данными из объектов тасков
+
 export default (task) => {
   const cardMarkdown = `
   <article class="card card--${[...task.color][utils.getRandomNumber(0, 5)]} ${utils.isRepeated(task.repeatingDays) ? `card--repeat` : ``}">
