@@ -51,7 +51,7 @@ const makeTask = (task) => {
                 <input
                   class="card__date"
                   type="text"
-                  placeholder="${task.dueDate}"
+                  placeholder="${new Date(task.dueDate)}"
                   name="date"
                 />
               </label>
@@ -59,7 +59,7 @@ const makeTask = (task) => {
                 <input
                   class="card__time"
                   type="text"
-                  placeholder="${task.dueDate}"
+                  placeholder="${new Date(task.dueDate)}"
                   name="time"
                 />
               </label>
