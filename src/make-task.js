@@ -4,7 +4,7 @@ const makeTask = (task) => {
   const cardMarkdown = `
   <article class="card card--${[...task.color][Math.floor(Math.random() * 5)]} ${isRepeated(task.repeatingDays) ? `card--repeat` : ``}">
   <form class="card__form" method="get">
-    <div class="card__inner">
+    <div class="card__inner" style="background-image: url(${task.picture}); background-size: cover">
       <div class="card__control">
         <button type="button" class="card__btn card__btn--edit">
           edit
