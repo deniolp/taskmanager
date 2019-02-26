@@ -2,10 +2,11 @@ import getHashtags from './get-hashtags';
 import utils from '../src/utils';
 
 const makeTask = (task) => {
+  console.log(task.picture);
   const cardMarkdown = `
-  <article class="card card--${[...task.color][Math.floor(Math.random() * 5)]} ${utils.isRepeated(task.repeatingDays) ? `card--repeat` : ``}">
+  <article class="card card--${[...task.color][utils.getRandomNumber(0, 5)]} ${utils.isRepeated(task.repeatingDays) ? `card--repeat` : ``}">
   <form class="card__form" method="get">
-    <div class="card__inner" style="background-image: url(${task.picture}); background-size: cover">
+    <div class="card__inner">
       <div class="card__control">
         <button type="button" class="card__btn card__btn--edit">
           edit
@@ -164,14 +165,14 @@ const makeTask = (task) => {
           </div>
         </div>
 
-        <label class="card__img-wrap card__img-wrap--empty">
+        <label class="card__img-wrap ${task.picture ? `` : `card__img-wrap--empty`}">
           <input
             type="file"
             class="card__img-input visually-hidden"
             name="img"
           />
           <img
-            src="img/add-photo.svg"
+            src="${task.picture ? task.picture : `img/add-photo.svg`}"
             alt="task picture"
             class="card__img"
           />
