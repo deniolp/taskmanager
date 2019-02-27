@@ -9,7 +9,7 @@ export default () => ({
     `Пройти интенсив на соточку`,
   ][utils.getRandomNumber(0, 2)],
   dueDate: Date.now() + 1 + utils.getRandomNumber(0, 7) * 24 * 60 * 60 * 1000,
-  tags: new Set([
+  tags: Array.from(new Set([
     `homework`,
     `theory`,
     `practice`,
@@ -17,7 +17,7 @@ export default () => ({
     `keks`,
     `important`,
     `work`,
-  ]),
+  ])).splice(utils.getRandomNumber(0, 7), 3),
   picture: `http://picsum.photos/100/100?r=${Math.random()}`,
   color: [
     `black`,

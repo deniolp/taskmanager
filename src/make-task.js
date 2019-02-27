@@ -152,7 +152,7 @@ export default (task) => {
 
           <div class="card__hashtag">
             <div class="card__hashtag-list">
-              ${getHashtags([...task.tags])}
+              ${getHashtags(task.tags)}
             </div>
 
             <label>
