@@ -1,4 +1,5 @@
 import utils from '../src/utils';
+import getSet from '../src/get-set';
 
 // Здесь структура данных для одного объекта таска
 
@@ -9,15 +10,7 @@ export default () => ({
     `Пройти интенсив на соточку`,
   ][utils.getRandomNumber(0, 2)],
   dueDate: Date.now() + 1 + utils.getRandomNumber(0, 7) * 24 * 60 * 60 * 1000,
-  tags: Array.from(new Set([
-    `homework`,
-    `theory`,
-    `practice`,
-    `intensive`,
-    `keks`,
-    `important`,
-    `work`,
-  ])).splice(utils.getRandomNumber(0, 7), 3),
+  tags: getSet(),
   picture: `http://picsum.photos/100/100?r=${Math.random()}`,
   color: [
     `black`,
