@@ -15,7 +15,7 @@ export default () => {
   const tags = new Set();
   const count = utils.getRandomNumber(0, 3);
   for (let i = 0; i < count; i++) {
-    tags.add(tagsCopy.splice(utils.getRandomNumber(0, tagsCopy.length) - 1, 1)[0]);
+    tags.add(tagsCopy.splice(utils.getRandomNumber(0, tagsCopy.length - 1), 1)[0]);
   }
   return tags;
 };
