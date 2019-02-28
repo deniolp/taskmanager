@@ -1,24 +1,29 @@
 import utils from '../src/utils';
 import getSet from '../src/get-set';
 
-// Здесь структура данных для одного объекта таска
+const MILLISECONDS_PER_DAY = 24 * 60 * 60 * 1000;
+const TITLES = [
+  `Изучить теорию`,
+  `Сделать домашку`,
+  `Пройти интенсив на соточку`,
+];
+const COLORS = [
+  `black`,
+  `yellow`,
+  `blue`,
+  `green`,
+  `pink`,
+];
+
+const getDate = () => Date.now() + 1 + utils.getRandomNumber(0, 7) * MILLISECONDS_PER_DAY;
+const getUrl = () => `http://picsum.photos/100/100?r=${Math.random()}`;
 
 export default () => ({
-  title: [
-    `Изучить теорию`,
-    `Сделать домашку`,
-    `Пройти интенсив на соточку`,
-  ][utils.getRandomNumber(0, 2)],
-  dueDate: Date.now() + 1 + utils.getRandomNumber(0, 7) * 24 * 60 * 60 * 1000,
+  title: TITLES[utils.getRandomNumber(0, 2)],
+  dueDate: getDate(),
   tags: getSet(),
-  picture: `http://picsum.photos/100/100?r=${Math.random()}`,
-  color: [
-    `black`,
-    `yellow`,
-    `blue`,
-    `green`,
-    `pink`,
-  ][utils.getRandomNumber(0, 4)],
+  picture: getUrl(),
+  color: COLORS[utils.getRandomNumber(0, 4)],
   repeatingDays: {
     'mo': true,
     'tu': false,
