@@ -1,6 +1,11 @@
-export default () => {
+import getHashtags from './get-hashtags';
+import {isRepeated} from './utils';
+
+// Здесь я соединяю верстку с данными из объектов тасков
+
+export default (task) => {
   const cardMarkdown = `
-  <article class="card card--yellow card--deadline">
+  <article class="card card--${task.color} ${isRepeated(task.repeatingDays) ? `card--repeat` : ``}">
   <form class="card__form" method="get">
     <div class="card__inner">
       <div class="card__control">
@@ -31,7 +36,7 @@ export default () => {
             placeholder="Start typing your text here..."
             name="text"
           >
-  This is card with missing deadline</textarea
+  ${task.title}</textarea
           >
         </label>
       </div>
@@ -43,12 +48,12 @@ export default () => {
               date: <span class="card__date-status">no</span>
             </button>
 
-            <fieldset class="card__date-deadline" disabled>
+            <fieldset class="card__date-deadline" ${task.dueDate ? `` : `disabled`}>
               <label class="card__input-deadline-wrap">
                 <input
                   class="card__date"
                   type="text"
-                  placeholder="23 September"
+                  placeholder="${new Date(task.dueDate)}"
                   name="date"
                 />
               </label>
@@ -56,7 +61,7 @@ export default () => {
                 <input
                   class="card__time"
                   type="text"
-                  placeholder="11:15 PM"
+                  placeholder="${new Date(task.dueDate)}"
                   name="time"
                 />
               </label>
@@ -147,50 +152,7 @@ export default () => {
 
           <div class="card__hashtag">
             <div class="card__hashtag-list">
-              <span class="card__hashtag-inner">
-                <input
-                  type="hidden"
-                  name="hashtag"
-                  value="repeat"
-                  class="card__hashtag-hidden-input"
-                />
-                <button type="button" class="card__hashtag-name">
-                  #repeat
-                </button>
-                <button type="button" class="card__hashtag-delete">
-                  delete
-                </button>
-              </span>
-
-              <span class="card__hashtag-inner">
-                <input
-                  type="hidden"
-                  name="hashtag"
-                  value="repeat"
-                  class="card__hashtag-hidden-input"
-                />
-                <button type="button" class="card__hashtag-name">
-                  #cinema
-                </button>
-                <button type="button" class="card__hashtag-delete">
-                  delete
-                </button>
-              </span>
-
-              <span class="card__hashtag-inner">
-                <input
-                  type="hidden"
-                  name="hashtag"
-                  value="repeat"
-                  class="card__hashtag-hidden-input"
-                />
-                <button type="button" class="card__hashtag-name">
-                  #entertaiment
-                </button>
-                <button type="button" class="card__hashtag-delete">
-                  delete
-                </button>
-              </span>
+              ${getHashtags([...task.tags])}
             </div>
 
             <label>
@@ -204,14 +166,14 @@ export default () => {
           </div>
         </div>
 
-        <label class="card__img-wrap card__img-wrap--empty">
+        <label class="card__img-wrap ${task.picture ? `` : `card__img-wrap--empty`}">
           <input
             type="file"
             class="card__img-input visually-hidden"
             name="img"
           />
           <img
-            src="img/add-photo.svg"
+            src="${task.picture ? task.picture : `img/add-photo.svg`}"
             alt="task picture"
             class="card__img"
           />
