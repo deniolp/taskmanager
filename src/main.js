@@ -1,7 +1,7 @@
-import makeFilter from '../src/make-filter';
+import makeFilter from './make-filter';
 import getTasks from './get-tasks';
-import makeTask from '../src/make-task';
-import utils from '../src/utils';
+import makeTask from './make-task';
+import {getRandomNumber} from './utils';
 
 const FILTERS = [
   {
@@ -33,7 +33,7 @@ const FILTERS = [
 const filtersContainer = document.querySelector(`.main__filter`);
 const cardsContainer = document.querySelector(`.board__tasks`);
 
-FILTERS.forEach((item) => filtersContainer.appendChild(makeFilter(item.name, utils.getRandomNumber(), item.isChecked, item.isDisabled)));
+FILTERS.forEach((item) => filtersContainer.appendChild(makeFilter(item.name, getRandomNumber(), item.isChecked, item.isDisabled)));
 
 const filters = filtersContainer.querySelectorAll(`.filter__input:not([disabled]) + label`);
 

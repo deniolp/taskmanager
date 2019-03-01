@@ -1,11 +1,11 @@
 import getHashtags from './get-hashtags';
-import utils from '../src/utils';
+import {isRepeated} from './utils';
 
 // Здесь я соединяю верстку с данными из объектов тасков
 
 export default (task) => {
   const cardMarkdown = `
-  <article class="card card--${task.color} ${utils.isRepeated(task.repeatingDays) ? `card--repeat` : ``}">
+  <article class="card card--${task.color} ${isRepeated(task.repeatingDays) ? `card--repeat` : ``}">
   <form class="card__form" method="get">
     <div class="card__inner">
       <div class="card__control">

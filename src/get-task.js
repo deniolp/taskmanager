@@ -1,5 +1,5 @@
-import utils from '../src/utils';
-import getSet from '../src/get-set';
+import {getRandomNumber} from './utils';
+import getSet from './get-set';
 
 const MILLISECONDS_PER_DAY = 24 * 60 * 60 * 1000;
 const TITLES = [
@@ -15,15 +15,15 @@ const COLORS = [
   `pink`,
 ];
 
-const getDate = () => Date.now() + 1 + utils.getRandomNumber(0, 7) * MILLISECONDS_PER_DAY;
+const getDate = () => Date.now() + 1 + getRandomNumber(0, 7) * MILLISECONDS_PER_DAY;
 const getUrl = () => `http://picsum.photos/100/100?r=${Math.random()}`;
 
 export default () => ({
-  title: TITLES[utils.getRandomNumber(0, 2)],
+  title: TITLES[getRandomNumber(0, 2)],
   dueDate: getDate(),
   tags: getSet(),
   picture: getUrl(),
-  color: COLORS[utils.getRandomNumber(0, 4)],
+  color: COLORS[getRandomNumber(0, 4)],
   repeatingDays: {
     'mo': true,
     'tu': false,

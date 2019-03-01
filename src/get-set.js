@@ -1,4 +1,4 @@
-import utils from '../src/utils';
+import {getRandomNumber} from './utils';
 
 const defaultTags = [
   `homework`,
@@ -13,9 +13,9 @@ const defaultTags = [
 export default () => {
   const tagsCopy = [...defaultTags];
   const tags = new Set();
-  const count = utils.getRandomNumber(0, 3);
+  const count = getRandomNumber(0, 3);
   for (let i = 0; i < count; i++) {
-    tags.add(tagsCopy.splice(utils.getRandomNumber(0, tagsCopy.length - 1), 1)[0]);
+    tags.add(tagsCopy.splice(getRandomNumber(0, tagsCopy.length - 1), 1)[0]);
   }
   return tags;
 };

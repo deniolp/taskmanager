@@ -1,4 +1,4 @@
-import getTask from '../src/get-task';
+import getTask from './get-task';
 
 // Здесь я делаю массив с объектами тасков
 
