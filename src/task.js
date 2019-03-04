@@ -302,3 +302,5 @@ class Task {
     container.appendChild(this._element);
   }
 }
+
+export {Task};
