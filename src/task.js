@@ -6,6 +6,8 @@ class Task {
     this._picture = data.picture;
     this._color = data.color;
     this._repeatingDays = data.repeatingDays;
+
+    this._element = null;
   }
 
   _isRepeated() {
@@ -289,5 +291,14 @@ class Task {
     const cardTemplate = document.createElement(`template`);
     cardTemplate.innerHTML = cardMarkdown;
     return cardTemplate.content.cloneNode(true);
+  }
+
+  render(container) {
+    if (this._element) {
+      container.removeChild(this._element);
+      this._element = null;
+    }
+    this._element = this.template;
+    container.appendChild(this._element);
   }
 }
