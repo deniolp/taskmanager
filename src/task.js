@@ -8,10 +8,18 @@ class Task {
     this._repeatingDays = data.repeatingDays;
 
     this._element = null;
+    this._state = {
+      isEdit: false
+    };
   }
 
   _isRepeated() {
     return Object.values(this._repeatingDays).find((item) => item === true);
+  }
+
+  _onEditButtonClick() {
+    this._state.isEdit = !this._state.isEdit;
+    this.update();
   }
 
   _getHashtags() {
@@ -286,11 +294,15 @@ class Task {
     </div>
   </form>
   </article>
-  `;
+  `.trim();
 
     const cardTemplate = document.createElement(`template`);
     cardTemplate.innerHTML = cardMarkdown;
-    return cardTemplate.content.cloneNode(true);
+    return cardTemplate.content.cloneNode(true).firstChild;
+  }
+
+  bind() {
+    this._element.querySelector(`.card__btn--edit`).addEventListener(`click`, this._onEditButtonClick.bind(this));
   }
 
   render(container) {
@@ -300,6 +312,18 @@ class Task {
     }
     this._element = this.template;
     container.appendChild(this._element);
+
+    this.bind();
+    this.update();
+  }
+
+  update() {
+    if (this._state.isEdit) {
+      return this._element.classList.add(`card--edit`);
+    }
+
+    return this._element.classList.remove(`card--edit`);
+
   }
 }
 
