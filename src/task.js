@@ -9,8 +9,8 @@ class Task {
 
     this._element = null;
     this._state = {
-      isEdit: false
     };
+    this._onEdit = null;
   }
 
   _isRepeated() {
@@ -18,8 +18,7 @@ class Task {
   }
 
   _onEditButtonClick() {
-    this._state.isEdit = !this._state.isEdit;
-    this.update();
+    return typeof this._onEdit === `function` && this._onEdit();
   }
 
   _getHashtags() {
@@ -41,6 +40,14 @@ class Task {
       </span>
     `;
     }).join(``);
+  }
+
+  get element() {
+    return this._element;
+  }
+
+  set onEdit(fn) {
+    this._onEdit = fn;
   }
 
   get template() {
@@ -301,16 +308,10 @@ class Task {
     return cardTemplate.content.cloneNode(true).firstChild;
   }
 
-  render(container) {
-    if (this._element) {
-      container.removeChild(this._element);
-      this._element = null;
-    }
+  render() {
     this._element = this.template;
-    container.appendChild(this._element);
-
     this.bind();
-    this.update();
+    return this._element;
   }
 
   unrender() {
