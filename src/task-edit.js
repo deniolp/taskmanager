@@ -1,4 +1,4 @@
-class Task {
+class TaskEdit {
   constructor(data) {
     this._title = data.title;
     this._dueDate = data.dueDate;
@@ -10,15 +10,16 @@ class Task {
     this._element = null;
     this._state = {
     };
-    this._onEdit = null;
+    this._onSubmit = null;
   }
 
   _isRepeated() {
     return Object.values(this._repeatingDays).find((item) => item === true);
   }
 
-  _onEditButtonClick() {
-    return typeof this._onEdit === `function` && this._onEdit();
+  _onSubmitButtonClick(evt) {
+    evt.preventDefault();
+    return typeof this._onSubmit === `function` && this._onSubmit();
   }
 
   _getHashtags() {
@@ -46,13 +47,13 @@ class Task {
     return this._element;
   }
 
-  set onEdit(fn) {
-    this._onEdit = fn;
+  set onSubmit(fn) {
+    this._onSubmit = fn;
   }
 
   get template() {
     const cardMarkdown = `
-  <article class="card card--${this._color} ${this._isRepeated() ? `card--repeat` : ``}">
+  <article class="card card--${this._color} card--edit ${this._isRepeated() ? `card--repeat` : ``}">
   <form class="card__form" method="get">
     <div class="card__inner">
       <div class="card__control">
@@ -320,12 +321,12 @@ class Task {
   }
 
   bind() {
-    this._element.querySelector(`.card__btn--edit`).addEventListener(`click`, this._onEditButtonClick.bind(this));
+    this._element.querySelector(`.card__form`).addEventListener(`submit`, this._onSubmitButtonClick.bind(this));
   }
 
   unbind() {
-    this._element.querySelector(`.card__btn--edit`).removeEventListener(`click`, this._onEditButtonClick.bind(this));
+    this._element.querySelector(`.card__form`).removeEventListener(`submit`, this._onSubmitButtonClick.bind(this));
   }
 }
 
-export {Task};
+export {TaskEdit};

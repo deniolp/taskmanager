@@ -2,6 +2,7 @@ import makeFilter from './make-filter';
 import getTasks from './get-tasks';
 import {getRandomNumber} from './utils';
 import {Task} from './task';
+import {TaskEdit} from './task-edit';
 
 const FILTERS = [
   {
@@ -46,5 +47,18 @@ filters.forEach((item) => item.addEventListener(`click`, () => {
 
 getTasks(7).forEach((item) => {
   const taskComponent = new Task(item);
+  const editTaskComponent = new TaskEdit(item);
   cardsContainer.appendChild(taskComponent.render());
+
+  taskComponent.onEdit = () => {
+    editTaskComponent.render();
+    cardsContainer.replaceChild(editTaskComponent.element, taskComponent.element);
+    taskComponent.unrender();
+  };
+
+  editTaskComponent.onSubmit = () => {
+    taskComponent.render();
+    cardsContainer.replaceChild(taskComponent.element, editTaskComponent.element);
+    editTaskComponent.unrender();
+  };
 });
