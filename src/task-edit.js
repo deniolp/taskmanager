@@ -114,6 +114,7 @@ class TaskEdit {
                   id="repeat-mo-3"
                   name="repeat"
                   value="mo"
+                  ${this._repeatingDays[`mo`] ? `checked` : ``}
                 />
                 <label class="card__repeat-day" for="repeat-mo-3"
                   >mo</label
@@ -124,7 +125,7 @@ class TaskEdit {
                   id="repeat-tu-3"
                   name="repeat"
                   value="tu"
-                  checked
+                  ${this._repeatingDays[`tu`] ? `checked` : ``}
                 />
                 <label class="card__repeat-day" for="repeat-tu-3"
                   >tu</label
@@ -135,6 +136,7 @@ class TaskEdit {
                   id="repeat-we-3"
                   name="repeat"
                   value="we"
+                  ${this._repeatingDays[`we`] ? `checked` : ``}
                 />
                 <label class="card__repeat-day" for="repeat-we-3"
                   >we</label
@@ -145,6 +147,7 @@ class TaskEdit {
                   id="repeat-th-3"
                   name="repeat"
                   value="th"
+                  ${this._repeatingDays[`th`] ? `checked` : ``}
                 />
                 <label class="card__repeat-day" for="repeat-th-3"
                   >th</label
@@ -155,7 +158,7 @@ class TaskEdit {
                   id="repeat-fr-3"
                   name="repeat"
                   value="fr"
-                  checked
+                  ${this._repeatingDays[`fr`] ? `checked` : ``}
                 />
                 <label class="card__repeat-day" for="repeat-fr-3"
                   >fr</label
@@ -166,6 +169,7 @@ class TaskEdit {
                   name="repeat"
                   value="sa"
                   id="repeat-sa-3"
+                  ${this._repeatingDays[`sa`] ? `checked` : ``}
                 />
                 <label class="card__repeat-day" for="repeat-sa-3"
                   >sa</label
@@ -176,7 +180,7 @@ class TaskEdit {
                   id="repeat-su-3"
                   name="repeat"
                   value="su"
-                  checked
+                  ${this._repeatingDays[`su`] ? `checked` : ``}
                 />
                 <label class="card__repeat-day" for="repeat-su-3"
                   >su</label
