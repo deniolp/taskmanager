@@ -301,10 +301,6 @@ class Task {
     return cardTemplate.content.cloneNode(true).firstChild;
   }
 
-  bind() {
-    this._element.querySelector(`.card__btn--edit`).addEventListener(`click`, this._onEditButtonClick.bind(this));
-  }
-
   render(container) {
     if (this._element) {
       container.removeChild(this._element);
@@ -317,13 +313,25 @@ class Task {
     this.update();
   }
 
+  unrender() {
+    this.unbind();
+    this._element = null;
+  }
+
+  bind() {
+    this._element.querySelector(`.card__btn--edit`).addEventListener(`click`, this._onEditButtonClick.bind(this));
+  }
+
+  unbind() {
+    this._element.querySelector(`.card__btn--edit`).removeEventListener(`click`, this._onEditButtonClick());
+  }
+
   update() {
     if (this._state.isEdit) {
       return this._element.classList.add(`card--edit`);
     }
 
     return this._element.classList.remove(`card--edit`);
-
   }
 }
 
