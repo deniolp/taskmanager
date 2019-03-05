@@ -1,11 +1,64 @@
-import getHashtags from './get-hashtags';
-import {isRepeated} from './utils';
+class TaskEdit {
+  constructor({title, dueDate, tags, picture, color, repeatingDays}) {
+    this._title = title;
+    this._dueDate = dueDate;
+    this._tags = tags;
+    this._picture = picture;
+    this._color = color;
+    this._repeatingDays = repeatingDays;
 
-// Здесь я соединяю верстку с данными из объектов тасков
+    this._element = null;
+    this._state = {
+    };
+    this._onSubmit = null;
+  }
 
-export default (task) => {
-  const cardMarkdown = `
-  <article class="card card--${task.color} ${isRepeated(task.repeatingDays) ? `card--repeat` : ``}">
+  _isRepeated() {
+    return Object.values(this._repeatingDays).find((item) => item === true);
+  }
+
+  _getHashtags() {
+    return [...this._tags].map((item) => {
+      return `
+      <span class="card__hashtag-inner">
+        <input
+          type="hidden"
+          name="hashtag"
+          value="repeat"
+          class="card__hashtag-hidden-input"
+        />
+        <button type="button" class="card__hashtag-name">
+          #${item}
+        </button>
+        <button type="button" class="card__hashtag-delete">
+          delete
+        </button>
+      </span>
+    `;
+    }).join(``);
+  }
+
+  _getRepeatingDays() {
+    return Object.values(this._repeatingDays).map((item) => {
+      return `
+      <input
+        class="visually-hidden card__repeat-day-input"
+        type="checkbox"
+        id="repeat-mo-3"
+        name="repeat"
+        value="mo"
+        ${item ? `checked` : ``}
+      />
+      <label class="card__repeat-day" for="repeat-mo-3"
+        >mo</label
+      >
+    `;
+    }).join(``);
+  }
+
+  get template() {
+    const cardMarkdown = `
+  <article class="card card--${this._color} card--edit ${this._isRepeated() ? `card--repeat` : ``}">
   <form class="card__form" method="get">
     <div class="card__inner">
       <div class="card__control">
@@ -36,7 +89,7 @@ export default (task) => {
             placeholder="Start typing your text here..."
             name="text"
           >
-  ${task.title}</textarea
+  ${this._title}</textarea
           >
         </label>
       </div>
@@ -48,12 +101,12 @@ export default (task) => {
               date: <span class="card__date-status">no</span>
             </button>
 
-            <fieldset class="card__date-deadline" ${task.dueDate ? `` : `disabled`}>
+            <fieldset class="card__date-deadline" ${this._dueDate ? `` : `disabled`}>
               <label class="card__input-deadline-wrap">
                 <input
                   class="card__date"
                   type="text"
-                  placeholder="${new Date(task.dueDate)}"
+                  placeholder="${new Date(this._dueDate)}"
                   name="date"
                 />
               </label>
@@ -61,7 +114,7 @@ export default (task) => {
                 <input
                   class="card__time"
                   type="text"
-                  placeholder="${new Date(task.dueDate)}"
+                  placeholder="${new Date(this._dueDate)}"
                   name="time"
                 />
               </label>
@@ -71,88 +124,16 @@ export default (task) => {
               repeat:<span class="card__repeat-status">no</span>
             </button>
 
-            <fieldset class="card__repeat-days" disabled>
+            <fieldset class="card__repeat-days">
               <div class="card__repeat-days-inner">
-                <input
-                  class="visually-hidden card__repeat-day-input"
-                  type="checkbox"
-                  id="repeat-mo-3"
-                  name="repeat"
-                  value="mo"
-                />
-                <label class="card__repeat-day" for="repeat-mo-3"
-                  >mo</label
-                >
-                <input
-                  class="visually-hidden card__repeat-day-input"
-                  type="checkbox"
-                  id="repeat-tu-3"
-                  name="repeat"
-                  value="tu"
-                  checked
-                />
-                <label class="card__repeat-day" for="repeat-tu-3"
-                  >tu</label
-                >
-                <input
-                  class="visually-hidden card__repeat-day-input"
-                  type="checkbox"
-                  id="repeat-we-3"
-                  name="repeat"
-                  value="we"
-                />
-                <label class="card__repeat-day" for="repeat-we-3"
-                  >we</label
-                >
-                <input
-                  class="visually-hidden card__repeat-day-input"
-                  type="checkbox"
-                  id="repeat-th-3"
-                  name="repeat"
-                  value="th"
-                />
-                <label class="card__repeat-day" for="repeat-th-3"
-                  >th</label
-                >
-                <input
-                  class="visually-hidden card__repeat-day-input"
-                  type="checkbox"
-                  id="repeat-fr-3"
-                  name="repeat"
-                  value="fr"
-                  checked
-                />
-                <label class="card__repeat-day" for="repeat-fr-3"
-                  >fr</label
-                >
-                <input
-                  class="visually-hidden card__repeat-day-input"
-                  type="checkbox"
-                  name="repeat"
-                  value="sa"
-                  id="repeat-sa-3"
-                />
-                <label class="card__repeat-day" for="repeat-sa-3"
-                  >sa</label
-                >
-                <input
-                  class="visually-hidden card__repeat-day-input"
-                  type="checkbox"
-                  id="repeat-su-3"
-                  name="repeat"
-                  value="su"
-                  checked
-                />
-                <label class="card__repeat-day" for="repeat-su-3"
-                  >su</label
-                >
+                ${this._getRepeatingDays()}
               </div>
             </fieldset>
           </div>
 
           <div class="card__hashtag">
             <div class="card__hashtag-list">
-              ${getHashtags([...task.tags])}
+              ${this._getHashtags()}
             </div>
 
             <label>
@@ -166,14 +147,14 @@ export default (task) => {
           </div>
         </div>
 
-        <label class="card__img-wrap ${task.picture ? `` : `card__img-wrap--empty`}">
+        <label class="card__img-wrap ${this._picture ? `` : `card__img-wrap--empty`}">
           <input
             type="file"
             class="card__img-input visually-hidden"
             name="img"
           />
           <img
-            src="${task.picture ? task.picture : `img/add-photo.svg`}"
+            src="${this._picture ? this._picture : `img/add-photo.svg`}"
             alt="task picture"
             class="card__img"
           />
@@ -254,9 +235,44 @@ export default (task) => {
     </div>
   </form>
   </article>
-  `;
+  `.trim();
 
-  const cardTemplate = document.createElement(`template`);
-  cardTemplate.innerHTML = cardMarkdown;
-  return cardTemplate.content.cloneNode(true);
-};
+    const cardTemplate = document.createElement(`template`);
+    cardTemplate.innerHTML = cardMarkdown;
+    return cardTemplate.content.cloneNode(true).firstChild;
+  }
+
+  get element() {
+    return this._element;
+  }
+
+  set onSubmit(fn) {
+    this._onSubmit = fn;
+  }
+
+  _onSubmitButtonClick(evt) {
+    evt.preventDefault();
+    return typeof this._onSubmit === `function` && this._onSubmit();
+  }
+
+  render() {
+    this._element = this.template;
+    this.bind();
+    return this._element;
+  }
+
+  unrender() {
+    this.unbind();
+    this._element = null;
+  }
+
+  bind() {
+    this._element.querySelector(`.card__form`).addEventListener(`submit`, this._onSubmitButtonClick.bind(this));
+  }
+
+  unbind() {
+    this._element.querySelector(`.card__form`).removeEventListener(`submit`, this._onSubmitButtonClick.bind(this));
+  }
+}
+
+export {TaskEdit};

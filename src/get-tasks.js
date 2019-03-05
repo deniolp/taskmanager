@@ -1,6 +1,6 @@
 import getTask from './get-task';
 
-// Здесь я делаю массив с объектами тасков
+// Здесь я делаю массив с экземплярами класса task
 
 export default (amount) => {
   const arr = [];
