@@ -1,11 +1,11 @@
 class Task {
-  constructor(data) {
-    this._title = data.title;
-    this._dueDate = data.dueDate;
-    this._tags = data.tags;
-    this._picture = data.picture;
-    this._color = data.color;
-    this._repeatingDays = data.repeatingDays;
+  constructor({title, dueDate, tags, picture, color, repeatingDays}) {
+    this._title = title;
+    this._dueDate = dueDate;
+    this._tags = tags;
+    this._picture = picture;
+    this._color = color;
+    this._repeatingDays = repeatingDays;
 
     this._element = null;
     this._state = {
