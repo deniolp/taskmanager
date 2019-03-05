@@ -119,7 +119,7 @@ class TaskEdit {
               repeat:<span class="card__repeat-status">no</span>
             </button>
 
-            <fieldset class="card__repeat-days" disabled>
+            <fieldset class="card__repeat-days">
               <div class="card__repeat-days-inner">
                 <input
                   class="visually-hidden card__repeat-day-input"
