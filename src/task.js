@@ -17,10 +17,6 @@ class Task {
     return Object.values(this._repeatingDays).find((item) => item === true);
   }
 
-  _onEditButtonClick() {
-    return typeof this._onEdit === `function` && this._onEdit();
-  }
-
   _getHashtags() {
     return [...this._tags].map((item) => {
       return `
@@ -31,14 +27,6 @@ class Task {
       </span>
     `;
     }).join(``);
-  }
-
-  get element() {
-    return this._element;
-  }
-
-  set onEdit(fn) {
-    this._onEdit = fn;
   }
 
   get template() {
@@ -136,6 +124,18 @@ class Task {
     const cardTemplate = document.createElement(`template`);
     cardTemplate.innerHTML = cardMarkdown;
     return cardTemplate.content.cloneNode(true).firstChild;
+  }
+
+  get element() {
+    return this._element;
+  }
+
+  set onEdit(fn) {
+    this._onEdit = fn;
+  }
+
+  _onEditButtonClick() {
+    return typeof this._onEdit === `function` && this._onEdit();
   }
 
   render() {
