@@ -38,6 +38,24 @@ class TaskEdit {
     }).join(``);
   }
 
+  _getRepeatingDays() {
+    return Object.values(this._repeatingDays).map((item) => {
+      return `
+      <input
+        class="visually-hidden card__repeat-day-input"
+        type="checkbox"
+        id="repeat-mo-3"
+        name="repeat"
+        value="mo"
+        ${item ? `checked` : ``}
+      />
+      <label class="card__repeat-day" for="repeat-mo-3"
+        >mo</label
+      >
+    `;
+    }).join(``);
+  }
+
   get template() {
     const cardMarkdown = `
   <article class="card card--${this._color} card--edit ${this._isRepeated() ? `card--repeat` : ``}">
@@ -108,83 +126,7 @@ class TaskEdit {
 
             <fieldset class="card__repeat-days">
               <div class="card__repeat-days-inner">
-                <input
-                  class="visually-hidden card__repeat-day-input"
-                  type="checkbox"
-                  id="repeat-mo-3"
-                  name="repeat"
-                  value="mo"
-                  ${this._repeatingDays[`mo`] ? `checked` : ``}
-                />
-                <label class="card__repeat-day" for="repeat-mo-3"
-                  >mo</label
-                >
-                <input
-                  class="visually-hidden card__repeat-day-input"
-                  type="checkbox"
-                  id="repeat-tu-3"
-                  name="repeat"
-                  value="tu"
-                  ${this._repeatingDays[`tu`] ? `checked` : ``}
-                />
-                <label class="card__repeat-day" for="repeat-tu-3"
-                  >tu</label
-                >
-                <input
-                  class="visually-hidden card__repeat-day-input"
-                  type="checkbox"
-                  id="repeat-we-3"
-                  name="repeat"
-                  value="we"
-                  ${this._repeatingDays[`we`] ? `checked` : ``}
-                />
-                <label class="card__repeat-day" for="repeat-we-3"
-                  >we</label
-                >
-                <input
-                  class="visually-hidden card__repeat-day-input"
-                  type="checkbox"
-                  id="repeat-th-3"
-                  name="repeat"
-                  value="th"
-                  ${this._repeatingDays[`th`] ? `checked` : ``}
-                />
-                <label class="card__repeat-day" for="repeat-th-3"
-                  >th</label
-                >
-                <input
-                  class="visually-hidden card__repeat-day-input"
-                  type="checkbox"
-                  id="repeat-fr-3"
-                  name="repeat"
-                  value="fr"
-                  ${this._repeatingDays[`fr`] ? `checked` : ``}
-                />
-                <label class="card__repeat-day" for="repeat-fr-3"
-                  >fr</label
-                >
-                <input
-                  class="visually-hidden card__repeat-day-input"
-                  type="checkbox"
-                  name="repeat"
-                  value="sa"
-                  id="repeat-sa-3"
-                  ${this._repeatingDays[`sa`] ? `checked` : ``}
-                />
-                <label class="card__repeat-day" for="repeat-sa-3"
-                  >sa</label
-                >
-                <input
-                  class="visually-hidden card__repeat-day-input"
-                  type="checkbox"
-                  id="repeat-su-3"
-                  name="repeat"
-                  value="su"
-                  ${this._repeatingDays[`su`] ? `checked` : ``}
-                />
-                <label class="card__repeat-day" for="repeat-su-3"
-                  >su</label
-                >
+                ${this._getRepeatingDays()}
               </div>
             </fieldset>
           </div>
