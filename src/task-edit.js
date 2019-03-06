@@ -57,7 +57,7 @@ class TaskEdit {
   }
 
   get template() {
-    const cardMarkdown = `
+    const cardMarkup = `
   <article class="card card--${this._color} card--edit ${this._isRepeated() ? `card--repeat` : ``}">
   <form class="card__form" method="get">
     <div class="card__inner">
@@ -238,7 +238,7 @@ class TaskEdit {
   `.trim();
 
     const cardTemplate = document.createElement(`template`);
-    cardTemplate.innerHTML = cardMarkdown;
+    cardTemplate.innerHTML = cardMarkup;
     return cardTemplate.content.cloneNode(true).firstChild;
   }
 
