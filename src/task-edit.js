@@ -39,25 +39,21 @@ class TaskEdit {
   }
 
   _getRepeatingDays() {
-    const arr = [];
-    for (const key in this._repeatingDays) {
-      if (Object.prototype.hasOwnProperty.call(this._repeatingDays, key)) {
-        arr.push(`
-        <input
-          class="visually-hidden card__repeat-day-input"
-          type="checkbox"
-          id="repeat-${key}-3"
-          name="repeat"
-          value="${key}"
-          ${this._repeatingDays[key] ? `checked` : ``}
-        />
-        <label class="card__repeat-day" for="repeat-${key}-3"
-          >${key}</label
-        >
-      `);
-      }
-    }
-    return arr.join(``);
+    return Object.keys(this._repeatingDays).map((key) => {
+      return `
+      <input
+        class="visually-hidden card__repeat-day-input"
+        type="checkbox"
+        id="repeat-${key}-3"
+        name="repeat"
+        value="${key}"
+        ${this._repeatingDays[key] ? `checked` : ``}
+      />
+      <label class="card__repeat-day" for="repeat-${key}-3"
+        >${key}</label
+      >
+    `;
+    }).join(``);
   }
 
   get template() {
