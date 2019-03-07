@@ -1,5 +1,8 @@
-class Task {
+import {Component} from './component';
+
+class Task extends Component {
   constructor({title, dueDate, tags, picture, color, repeatingDays}) {
+    super();
     this._title = title;
     this._dueDate = dueDate;
     this._tags = tags;
@@ -7,9 +10,6 @@ class Task {
     this._color = color;
     this._repeatingDays = repeatingDays;
 
-    this._element = null;
-    this._state = {
-    };
     this._onEdit = null;
     this._onEditButtonClick = this._onEditButtonClick.bind(this);
   }
@@ -127,10 +127,6 @@ class Task {
     return cardTemplate.content.cloneNode(true).firstChild;
   }
 
-  get element() {
-    return this._element;
-  }
-
   set onEdit(fn) {
     this._onEdit = fn;
   }
@@ -139,22 +135,11 @@ class Task {
     return typeof this._onEdit === `function` && this._onEdit();
   }
 
-  render() {
-    this._element = this.template;
-    this.bind();
-    return this._element;
-  }
-
-  unrender() {
-    this.unbind();
-    this._element = null;
-  }
-
-  bind() {
+  createListeners() {
     this._element.querySelector(`.card__btn--edit`).addEventListener(`click`, this._onEditButtonClick);
   }
 
-  unbind() {
+  removeListeners() {
     this._element.querySelector(`.card__btn--edit`).removeEventListener(`click`, this._onEditButtonClick);
   }
 }

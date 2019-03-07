@@ -1,5 +1,8 @@
-class TaskEdit {
+import {Component} from './component';
+
+class TaskEdit extends Component {
   constructor({title, dueDate, tags, picture, color, repeatingDays}) {
+    super();
     this._title = title;
     this._dueDate = dueDate;
     this._tags = tags;
@@ -7,9 +10,6 @@ class TaskEdit {
     this._color = color;
     this._repeatingDays = repeatingDays;
 
-    this._element = null;
-    this._state = {
-    };
     this._onSubmit = null;
     this._onSubmitButtonClick = this._onSubmitButtonClick.bind(this);
   }
@@ -243,10 +243,6 @@ class TaskEdit {
     return cardTemplate.content.cloneNode(true).firstChild;
   }
 
-  get element() {
-    return this._element;
-  }
-
   set onSubmit(fn) {
     this._onSubmit = fn;
   }
@@ -256,22 +252,11 @@ class TaskEdit {
     return typeof this._onSubmit === `function` && this._onSubmit();
   }
 
-  render() {
-    this._element = this.template;
-    this.bind();
-    return this._element;
-  }
-
-  unrender() {
-    this.unbind();
-    this._element = null;
-  }
-
-  bind() {
+  createListeners() {
     this._element.querySelector(`.card__form`).addEventListener(`submit`, this._onSubmitButtonClick);
   }
 
-  unbind() {
+  removeListeners() {
     this._element.querySelector(`.card__form`).removeEventListener(`submit`, this._onSubmitButtonClick);
   }
 }
