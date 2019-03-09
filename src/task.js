@@ -1,5 +1,8 @@
-class Task {
+import {Component} from './component';
+
+class Task extends Component {
   constructor({title, dueDate, tags, picture, color, repeatingDays}) {
+    super();
     this._title = title;
     this._dueDate = dueDate;
     this._tags = tags;
@@ -7,10 +10,8 @@ class Task {
     this._color = color;
     this._repeatingDays = repeatingDays;
 
-    this._element = null;
-    this._state = {
-    };
     this._onEdit = null;
+    this._onEditButtonClick = this._onEditButtonClick.bind(this);
   }
 
   _isRepeated() {
@@ -30,7 +31,7 @@ class Task {
   }
 
   get template() {
-    const cardMarkdown = `
+    const cardMarkup = `
   <article class="card card--${this._color} ${this._isRepeated() ? `card--repeat` : ``}">
   <form class="card__form" method="get">
     <div class="card__inner">
@@ -122,12 +123,8 @@ class Task {
   `.trim();
 
     const cardTemplate = document.createElement(`template`);
-    cardTemplate.innerHTML = cardMarkdown;
+    cardTemplate.innerHTML = cardMarkup;
     return cardTemplate.content.cloneNode(true).firstChild;
-  }
-
-  get element() {
-    return this._element;
   }
 
   set onEdit(fn) {
@@ -138,23 +135,12 @@ class Task {
     return typeof this._onEdit === `function` && this._onEdit();
   }
 
-  render() {
-    this._element = this.template;
-    this.bind();
-    return this._element;
+  createListeners() {
+    this._element.querySelector(`.card__btn--edit`).addEventListener(`click`, this._onEditButtonClick);
   }
 
-  unrender() {
-    this.unbind();
-    this._element = null;
-  }
-
-  bind() {
-    this._element.querySelector(`.card__btn--edit`).addEventListener(`click`, this._onEditButtonClick.bind(this));
-  }
-
-  unbind() {
-    this._element.querySelector(`.card__btn--edit`).removeEventListener(`click`, this._onEditButtonClick.bind(this));
+  removeListeners() {
+    this._element.querySelector(`.card__btn--edit`).removeEventListener(`click`, this._onEditButtonClick);
   }
 }
 

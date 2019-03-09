@@ -1,5 +1,8 @@
-class TaskEdit {
+import {Component} from './component';
+
+class TaskEdit extends Component {
   constructor({title, dueDate, tags, picture, color, repeatingDays}) {
+    super();
     this._title = title;
     this._dueDate = dueDate;
     this._tags = tags;
@@ -7,10 +10,8 @@ class TaskEdit {
     this._color = color;
     this._repeatingDays = repeatingDays;
 
-    this._element = null;
-    this._state = {
-    };
     this._onSubmit = null;
+    this._onSubmitButtonClick = this._onSubmitButtonClick.bind(this);
   }
 
   _isRepeated() {
@@ -39,25 +40,25 @@ class TaskEdit {
   }
 
   _getRepeatingDays() {
-    return Object.values(this._repeatingDays).map((item) => {
+    return Object.keys(this._repeatingDays).map((key) => {
       return `
       <input
         class="visually-hidden card__repeat-day-input"
         type="checkbox"
-        id="repeat-mo-3"
+        id="repeat-${key}-3"
         name="repeat"
-        value="mo"
-        ${item ? `checked` : ``}
+        value="${key}"
+        ${this._repeatingDays[key] ? `checked` : ``}
       />
-      <label class="card__repeat-day" for="repeat-mo-3"
-        >mo</label
+      <label class="card__repeat-day" for="repeat-${key}-3"
+        >${key}</label
       >
     `;
     }).join(``);
   }
 
   get template() {
-    const cardMarkdown = `
+    const cardMarkup = `
   <article class="card card--${this._color} card--edit ${this._isRepeated() ? `card--repeat` : ``}">
   <form class="card__form" method="get">
     <div class="card__inner">
@@ -238,12 +239,8 @@ class TaskEdit {
   `.trim();
 
     const cardTemplate = document.createElement(`template`);
-    cardTemplate.innerHTML = cardMarkdown;
+    cardTemplate.innerHTML = cardMarkup;
     return cardTemplate.content.cloneNode(true).firstChild;
-  }
-
-  get element() {
-    return this._element;
   }
 
   set onSubmit(fn) {
@@ -255,23 +252,12 @@ class TaskEdit {
     return typeof this._onSubmit === `function` && this._onSubmit();
   }
 
-  render() {
-    this._element = this.template;
-    this.bind();
-    return this._element;
+  createListeners() {
+    this._element.querySelector(`.card__form`).addEventListener(`submit`, this._onSubmitButtonClick);
   }
 
-  unrender() {
-    this.unbind();
-    this._element = null;
-  }
-
-  bind() {
-    this._element.querySelector(`.card__form`).addEventListener(`submit`, this._onSubmitButtonClick.bind(this));
-  }
-
-  unbind() {
-    this._element.querySelector(`.card__form`).removeEventListener(`submit`, this._onSubmitButtonClick.bind(this));
+  removeListeners() {
+    this._element.querySelector(`.card__form`).removeEventListener(`submit`, this._onSubmitButtonClick);
   }
 }
 
