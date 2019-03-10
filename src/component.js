@@ -18,7 +18,7 @@ class Component {
 
   render() {
     this._element = this.template;
-    this._createListeners();
+    this._AddListeners();
     return this._element;
   }
 
@@ -27,7 +27,7 @@ class Component {
     this._element = null;
   }
 
-  _createListeners() {}
+  _AddListeners() {}
   _removeListeners() {}
 }
 

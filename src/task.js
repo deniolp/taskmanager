@@ -135,7 +135,7 @@ class Task extends Component {
     return typeof this._onEdit === `function` && this._onEdit();
   }
 
-  _createListeners() {
+  _AddListeners() {
     this._element.querySelector(`.card__btn--edit`).addEventListener(`click`, this._onEditButtonClick);
   }
 
