@@ -252,11 +252,11 @@ class TaskEdit extends Component {
     return typeof this._onSubmit === `function` && this._onSubmit();
   }
 
-  createListeners() {
+  _createListeners() {
     this._element.querySelector(`.card__form`).addEventListener(`submit`, this._onSubmitButtonClick);
   }
 
-  removeListeners() {
+  _removeListeners() {
     this._element.querySelector(`.card__form`).removeEventListener(`submit`, this._onSubmitButtonClick);
   }
 }
