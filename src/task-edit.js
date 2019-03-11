@@ -9,6 +9,15 @@ class TaskEdit extends Component {
     this._picture = picture;
     this._color = color;
     this._repeatingDays = repeatingDays;
+    this._days = [
+      `mo`,
+      `tu`,
+      `we`,
+      `th`,
+      `fr`,
+      `sa`,
+      `su`
+    ];
 
     this._onSubmit = null;
     this._onSubmitButtonClick = this._onSubmitButtonClick.bind(this);
@@ -40,7 +49,7 @@ class TaskEdit extends Component {
   }
 
   _getRepeatingDays() {
-    return Object.keys(this._repeatingDays).map((key) => {
+    return this._days.map((key) => {
       return `
       <input
         class="visually-hidden card__repeat-day-input"
