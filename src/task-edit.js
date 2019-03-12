@@ -9,7 +9,7 @@ class TaskEdit extends Component {
     this._picture = picture;
     this._color = color;
     this._repeatingDays = repeatingDays;
-    this._days = [
+    this._DAYS = [
       `mo`,
       `tu`,
       `we`,
@@ -17,6 +17,13 @@ class TaskEdit extends Component {
       `fr`,
       `sa`,
       `su`
+    ];
+    this._COLORS = [
+      `black`,
+      `yellow`,
+      `blue`,
+      `green`,
+      `pink`,
     ];
 
     this._onSubmit = null;
@@ -55,7 +62,7 @@ class TaskEdit extends Component {
   }
 
   _getRepeatingDays() {
-    return this._days.map((key) => {
+    return this._DAYS.map((key) => {
       return `
       <input
         class="visually-hidden card__repeat-day-input"
@@ -69,6 +76,25 @@ class TaskEdit extends Component {
         >${key}</label
       >
     `;
+    }).join(``);
+  }
+
+  _getColorCheckboxes() {
+    return this._COLORS.map((color) => {
+      return `
+      <input
+              type="radio"
+              id="color-${color}-3"
+              class="card__color-input card__color-input--${color} visually-hidden"
+              name="color"
+              value="${color}" ${this._color === `${color}` && `checked`}
+            />
+            <label
+              for="color-${color}-3"
+              class="card__color card__color--${color}"
+              >${color}</label
+            >
+      `;
     }).join(``);
   }
 
@@ -179,67 +205,7 @@ class TaskEdit extends Component {
         <div class="card__colors-inner">
           <h3 class="card__colors-title">Color</h3>
           <div class="card__colors-wrap">
-            <input
-              type="radio"
-              id="color-black-3"
-              class="card__color-input card__color-input--black visually-hidden"
-              name="color"
-              value="black" ${this._color === `black` && `checked`}
-            />
-            <label
-              for="color-black-3"
-              class="card__color card__color--black"
-              >black</label
-            >
-            <input
-              type="radio"
-              id="color-yellow-3"
-              class="card__color-input card__color-input--yellow visually-hidden"
-              name="color"
-              value="yellow" ${this._color === `yellow` && `checked`}
-            />
-            <label
-              for="color-yellow-3"
-              class="card__color card__color--yellow"
-              >yellow</label
-            >
-            <input
-              type="radio"
-              id="color-blue-3"
-              class="card__color-input card__color-input--blue visually-hidden"
-              name="color"
-              value="blue" ${this._color === `blue` && `checked`}
-            />
-            <label
-              for="color-blue-3"
-              class="card__color card__color--blue"
-              >blue</label
-            >
-            <input
-              type="radio"
-              id="color-green-3"
-              class="card__color-input card__color-input--green visually-hidden"
-              name="color"
-              value="green"
-              ${this._color === `green` && `checked`}
-            />
-            <label
-              for="color-green-3"
-              class="card__color card__color--green"
-              >green</label
-            >
-            <input
-              type="radio"
-              id="color-pink-3"
-              class="card__color-input card__color-input--pink visually-hidden"
-              name="color"
-              value="pink" ${this._color === `pink` && `checked`}
-            />
-            <label
-              for="color-pink-3"
-              class="card__color card__color--pink"
-              >pink</label
-            >
+          ${this._getColorCheckboxes()}
           </div>
         </div>
       </div>

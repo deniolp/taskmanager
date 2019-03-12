@@ -28,7 +28,7 @@ export default () => ({
     'mo': false,
     'tu': false,
     'we': false,
-    'th': false,
+    'th': true,
     'fr': false,
     'sa': false,
     'su': false,
