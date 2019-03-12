@@ -1,5 +1,6 @@
 import {getRandomNumber} from './utils';
 import getSet from './get-set';
+import moment from 'moment';
 
 const MILLISECONDS_PER_DAY = 24 * 60 * 60 * 1000;
 const TITLES = [
@@ -15,7 +16,7 @@ const COLORS = [
   `pink`,
 ];
 
-const getDate = () => Date.now() + 1 + getRandomNumber(0, 7) * MILLISECONDS_PER_DAY;
+const getDate = () => moment(Date.now() + 1 + getRandomNumber(0, 7) * MILLISECONDS_PER_DAY).format(`DD.MM.YYYY ${getRandomNumber(10, 23)}:${getRandomNumber(10, 59)}`);
 const getUrl = () => `http://picsum.photos/100/100?r=${Math.random()}`;
 
 export default () => ({

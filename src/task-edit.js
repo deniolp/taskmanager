@@ -148,7 +148,7 @@ class TaskEdit extends Component {
                 <input
                   class="card__date"
                   type="text"
-                  placeholder="23 September"
+                  placeholder="${this._dueDate.match(/(.+)\s(.+)/)[1]}"
                   name="date"
                 />
               </label>
@@ -156,7 +156,7 @@ class TaskEdit extends Component {
                 <input
                   class="card__time"
                   type="text"
-                  placeholder="11:15 PM"
+                  placeholder="${this._dueDate.match(/\s(.+)/)[0]}"
                   name="time"
                 />
               </label>

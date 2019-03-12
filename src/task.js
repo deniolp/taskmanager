@@ -82,7 +82,7 @@ class Task extends Component {
                 <input
                   class="card__date"
                   type="text"
-                  placeholder="${new Date(this._dueDate)}"
+                  placeholder="${this._dueDate.match(/(.+)\s(.+)/)[1]}"
                   name="date"
                 />
               </label>
@@ -90,7 +90,7 @@ class Task extends Component {
                 <input
                   class="card__time"
                   type="text"
-                  placeholder="${new Date(this._dueDate)}"
+                  placeholder="${this._dueDate.match(/\s(.+)/)[0]}"
                   name="time"
                 />
               </label>
