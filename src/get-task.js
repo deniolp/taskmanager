@@ -27,7 +27,7 @@ export default () => ({
   repeatingDays: {
     'mo': false,
     'tu': false,
-    'we': true,
+    'we': false,
     'th': false,
     'fr': false,
     'sa': false,

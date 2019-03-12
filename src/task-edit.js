@@ -184,7 +184,7 @@ class TaskEdit extends Component {
               id="color-black-3"
               class="card__color-input card__color-input--black visually-hidden"
               name="color"
-              value="black"
+              value="black" ${this._color === `black` && `checked`}
             />
             <label
               for="color-black-3"
@@ -196,7 +196,7 @@ class TaskEdit extends Component {
               id="color-yellow-3"
               class="card__color-input card__color-input--yellow visually-hidden"
               name="color"
-              value="yellow"
+              value="yellow" ${this._color === `yellow` && `checked`}
             />
             <label
               for="color-yellow-3"
@@ -208,7 +208,7 @@ class TaskEdit extends Component {
               id="color-blue-3"
               class="card__color-input card__color-input--blue visually-hidden"
               name="color"
-              value="blue"
+              value="blue" ${this._color === `blue` && `checked`}
             />
             <label
               for="color-blue-3"
@@ -221,7 +221,7 @@ class TaskEdit extends Component {
               class="card__color-input card__color-input--green visually-hidden"
               name="color"
               value="green"
-              checked
+              ${this._color === `green` && `checked`}
             />
             <label
               for="color-green-3"
@@ -233,7 +233,7 @@ class TaskEdit extends Component {
               id="color-pink-3"
               class="card__color-input card__color-input--pink visually-hidden"
               name="color"
-              value="pink"
+              value="pink" ${this._color === `pink` && `checked`}
             />
             <label
               for="color-pink-3"
