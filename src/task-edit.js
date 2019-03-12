@@ -26,14 +26,15 @@ class TaskEdit extends Component {
       `pink`,
     ];
 
-    this._onSubmit = null;
-
     this._state = {
-      isDate: this._dueDate,
+      isDate: false,
       isRepeated: this._isRepeated(),
     };
 
+    this._onSubmit = null;
     this._onSubmitButtonClick = this._onSubmitButtonClick.bind(this);
+    this._onChangeDate = this._onChangeDate.bind(this);
+    this._onChangeRepeated = this._onChangeRepeated.bind(this);
   }
 
   _isRepeated() {
@@ -233,12 +234,42 @@ class TaskEdit extends Component {
     return typeof this._onSubmit === `function` && this._onSubmit();
   }
 
+  _onChangeDate() {
+    this._state.isDate = !this._state.isDate;
+    this._removeListeners();
+    this._partialUpdate();
+    this._addListeners();
+  }
+
+  _onChangeRepeated() {
+    this._state.isRepeated = !this._state.isRepeated;
+    this._removeListeners();
+    this._partialUpdate();
+    this._addListeners();
+  }
+
   _addListeners() {
     this._element.querySelector(`.card__form`).addEventListener(`submit`, this._onSubmitButtonClick);
+    this._element.querySelector(`.card__date-deadline-toggle`).addEventListener(`click`, this._onChangeDate);
+    this._element.querySelector(`.card__repeat-toggle`).addEventListener(`click`, this._onChangeRepeated);
   }
 
   _removeListeners() {
     this._element.querySelector(`.card__form`).removeEventListener(`submit`, this._onSubmitButtonClick);
+    this._element.querySelector(`.card__date-deadline-toggle`).removeEventListener(`click`, this._onChangeDate);
+    this._element.querySelector(`.card__repeat-toggle`).removeEventListener(`click`, this._onChangeRepeated);
+  }
+
+  _partialUpdate() {
+    this._element.innerHTML = this.template.innerHTML;
+  }
+
+  update(data) {
+    this._title = data.title;
+    this._tags = data.tags;
+    this._color = data.color;
+    this._repeatingDays = data.repeatingDays;
+    this._dueDate = data.dueDate;
   }
 }
 

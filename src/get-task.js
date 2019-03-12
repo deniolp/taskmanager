@@ -29,7 +29,7 @@ export default () => ({
     'mo': false,
     'tu': false,
     'we': false,
-    'th': true,
+    'th': false,
     'fr': false,
     'sa': false,
     'su': false,

@@ -27,6 +27,8 @@ class Component {
     this._element = null;
   }
 
+  update() {}
+
   _addListeners() {}
   _removeListeners() {}
 }

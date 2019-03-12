@@ -11,7 +11,6 @@ class Task extends Component {
     this._repeatingDays = repeatingDays;
 
     this._state = {
-      isDate: this._dueDate,
       isRepeated: this._isRepeated(),
     };
 
@@ -146,6 +145,14 @@ class Task extends Component {
 
   _removeListeners() {
     this._element.querySelector(`.card__btn--edit`).removeEventListener(`click`, this._onEditButtonClick);
+  }
+
+  update(data) {
+    this._title = data.title;
+    this._tags = data.tags;
+    this._color = data.color;
+    this._repeatingDays = data.repeatingDays;
+    this._dueDate = data.dueDate;
   }
 }
 
