@@ -16,7 +16,7 @@ const COLORS = [
   `pink`,
 ];
 
-const getDate = () => moment(Date.now() + 1 + getRandomNumber(0, 7) * MILLISECONDS_PER_DAY).format(`DD.MM.YYYY ${getRandomNumber(10, 23)}:${getRandomNumber(10, 59)}`);
+const getDate = () => moment(Date.now() + 1 + getRandomNumber(0, 7) * MILLISECONDS_PER_DAY).format(`DD.MM.YYYY ${getRandomNumber(0, 23)}:${getRandomNumber(0, 5)}${getRandomNumber(0, 9)}`);
 const getUrl = () => `http://picsum.photos/100/100?r=${Math.random()}`;
 
 export default () => ({
