@@ -29,7 +29,7 @@ class TaskEdit extends Component {
     this._onSubmit = null;
 
     this._state = {
-      isDate: false,
+      isDate: this._dueDate,
       isRepeated: this._isRepeated(),
     };
 
@@ -233,7 +233,7 @@ class TaskEdit extends Component {
     return typeof this._onSubmit === `function` && this._onSubmit();
   }
 
-  _AddListeners() {
+  _addListeners() {
     this._element.querySelector(`.card__form`).addEventListener(`submit`, this._onSubmitButtonClick);
   }
 

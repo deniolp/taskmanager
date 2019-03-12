@@ -10,6 +10,11 @@ class Task extends Component {
     this._color = color;
     this._repeatingDays = repeatingDays;
 
+    this._state = {
+      isDate: this._dueDate,
+      isRepeated: this._isRepeated(),
+    };
+
     this._onEdit = null;
     this._onEditButtonClick = this._onEditButtonClick.bind(this);
   }
@@ -32,7 +37,7 @@ class Task extends Component {
 
   get template() {
     const cardMarkup = `
-  <article class="card card--${this._color} ${this._isRepeated() ? `card--repeat` : ``}">
+  <article class="card card--${this._color} ${this._state.isRepeated ? `card--repeat` : ``}">
   <form class="card__form" method="get">
     <div class="card__inner">
       <div class="card__control">
@@ -135,7 +140,7 @@ class Task extends Component {
     return typeof this._onEdit === `function` && this._onEdit();
   }
 
-  _AddListeners() {
+  _addListeners() {
     this._element.querySelector(`.card__btn--edit`).addEventListener(`click`, this._onEditButtonClick);
   }
 
