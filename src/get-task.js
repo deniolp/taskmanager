@@ -25,11 +25,11 @@ export default () => ({
   picture: getUrl(),
   color: COLORS[getRandomNumber(0, 4)],
   repeatingDays: {
-    'mo': true,
+    'mo': false,
     'tu': false,
     'we': true,
     'th': false,
-    'fr': true,
+    'fr': false,
     'sa': false,
     'su': false,
   },

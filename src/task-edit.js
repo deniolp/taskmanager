@@ -20,6 +20,12 @@ class TaskEdit extends Component {
     ];
 
     this._onSubmit = null;
+
+    this._state = {
+      isDate: false,
+      isRepeated: this._isRepeated(),
+    };
+
     this._onSubmitButtonClick = this._onSubmitButtonClick.bind(this);
   }
 
@@ -68,7 +74,7 @@ class TaskEdit extends Component {
 
   get template() {
     const cardMarkup = `
-  <article class="card card--${this._color} card--edit ${this._isRepeated() ? `card--repeat` : ``}">
+  <article class="card card--${this._color} card--edit ${this._state.isRepeated ? `card--repeat` : ``}">
   <form class="card__form" method="get">
     <div class="card__inner">
       <div class="card__control">
@@ -108,15 +114,15 @@ class TaskEdit extends Component {
         <div class="card__details">
           <div class="card__dates">
             <button class="card__date-deadline-toggle" type="button">
-              date: <span class="card__date-status">no</span>
+              date: <span class="card__date-status">${this._state.isDate ? `yes` : `no`}</span>
             </button>
 
-            <fieldset class="card__date-deadline" ${this._dueDate ? `` : `disabled`}>
+            <fieldset class="card__date-deadline" ${!this._state.isDate && `disabled`}>
               <label class="card__input-deadline-wrap">
                 <input
                   class="card__date"
                   type="text"
-                  placeholder="${new Date(this._dueDate)}"
+                  placeholder="23 September"
                   name="date"
                 />
               </label>
@@ -124,17 +130,17 @@ class TaskEdit extends Component {
                 <input
                   class="card__time"
                   type="text"
-                  placeholder="${new Date(this._dueDate)}"
+                  placeholder="11:15 PM"
                   name="time"
                 />
               </label>
             </fieldset>
 
             <button class="card__repeat-toggle" type="button">
-              repeat:<span class="card__repeat-status">no</span>
+              repeat:<span class="card__repeat-status">${this._state.isRepeated ? `yes` : `no`}</span>
             </button>
 
-            <fieldset class="card__repeat-days">
+            <fieldset class="card__repeat-days" ${!this._state.isRepeated && `disabled`}>
               <div class="card__repeat-days-inner">
                 ${this._getRepeatingDays()}
               </div>
