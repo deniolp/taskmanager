@@ -1,4 +1,5 @@
 import {Component} from './component';
+import moment from 'moment';
 
 class TaskEdit extends Component {
   constructor({title, dueDate, tags, picture, color, repeatingDays}) {
@@ -48,7 +49,7 @@ class TaskEdit extends Component {
         <input
           type="hidden"
           name="hashtag"
-          value="repeat"
+          value="${item}"
           class="card__hashtag-hidden-input"
         />
         <button type="button" class="card__hashtag-name">
@@ -229,9 +230,43 @@ class TaskEdit extends Component {
     this._onSubmit = fn;
   }
 
+  _processForm(formData) {
+    const entry = {
+      title: ``,
+      color: ``,
+      tags: new Set(),
+      dueDate: moment(new Date()).format(`DD.MM.YYYY h:mm`),
+      repeatingDays: {
+        'mo': false,
+        'tu': false,
+        'we': false,
+        'th': false,
+        'fr': false,
+        'sa': false,
+        'su': false,
+      }
+    };
+    const taskEditMapper = TaskEdit.createMapper(entry);
+
+    for (const pair of formData.entries()) {
+      const [property, value] = pair;
+      if (taskEditMapper[property]) {
+        taskEditMapper[property](value);
+      }
+    }
+    return entry;
+  }
+
   _onSubmitButtonClick(evt) {
     evt.preventDefault();
-    return typeof this._onSubmit === `function` && this._onSubmit();
+
+    const formData = new FormData(this._element.querySelector(`.card__form`));
+    const newData = this._processForm(formData);
+
+    if (typeof this._onSubmit === `function`) {
+      this._onSubmit(newData);
+    }
+    this.update(newData);
   }
 
   _onChangeDate() {
@@ -270,6 +305,22 @@ class TaskEdit extends Component {
     this._color = data.color;
     this._repeatingDays = data.repeatingDays;
     this._dueDate = data.dueDate;
+  }
+
+  static createMapper(target) {
+    return {
+      hashtag: (value) => target.tags.add(value),
+      text: (value) => {
+        target.title = value;
+      },
+      color: (value) => {
+        target.color = value;
+      },
+      repeat: (value) => {
+        target.repeatingDays[value] = true;
+      },
+      date: (value) => target.dueDate[value],
+    };
   }
 }
 
