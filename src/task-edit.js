@@ -150,7 +150,7 @@ class TaskEdit extends Component {
                 <input
                   class="card__date"
                   type="text"
-                  placeholder="${this._dueDate.match(/(.+)\s(.+)/)[1]}"
+                  placeholder="${moment(`20180923`).format(`DD MMMM`)}"
                   name="date"
                 />
               </label>
@@ -158,7 +158,7 @@ class TaskEdit extends Component {
                 <input
                   class="card__time"
                   type="text"
-                  placeholder="${this._dueDate.match(/\s(.+)/)[0]}"
+                  placeholder="${moment(`20180923T0900`).format(`HH:mm`)}"
                   name="time"
                 />
               </label>
@@ -235,7 +235,7 @@ class TaskEdit extends Component {
       title: ``,
       color: ``,
       tags: new Set(),
-      dueDate: moment(new Date()).format(`DD.MM.YYYY h:mm`),
+      dueDate: moment(new Date()).format(`DD MMMM h:mm`),
       repeatingDays: {
         'mo': false,
         'tu': false,

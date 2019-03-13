@@ -1,4 +1,5 @@
 import {Component} from './component';
+import moment from 'moment';
 
 class Task extends Component {
   constructor({title, dueDate, tags, picture, color, repeatingDays}) {
@@ -81,7 +82,7 @@ class Task extends Component {
                 <input
                   class="card__date"
                   type="text"
-                  placeholder="${this._dueDate.match(/(.+)\s(.+)/)[1]}"
+                  placeholder="${moment(`20180923`).format(`DD MMMM`)}"
                   name="date"
                 />
               </label>
@@ -89,7 +90,7 @@ class Task extends Component {
                 <input
                   class="card__time"
                   type="text"
-                  placeholder="${this._dueDate.match(/\s(.+)/)[0]}"
+                  placeholder="${moment(`20180923T0900`).format(`HH:mm`)}"
                   name="time"
                 />
               </label>
