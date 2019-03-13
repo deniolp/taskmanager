@@ -19,6 +19,7 @@ export default (item) => {
     item.color = obj.color;
     item.repeatingDays = obj.repeatingDays;
     item.dueDate = obj.dueDate;
+    item.dueTime = obj.dueTime;
 
     taskComponent.update(item, state);
     taskComponent.render();

@@ -1,11 +1,12 @@
 import {Component} from './component';
-import moment from 'moment';
+import flatpickr from 'flatpickr';
 
 class TaskEdit extends Component {
-  constructor({title, dueDate, tags, picture, color, repeatingDays}) {
+  constructor({title, dueDate, dueTime, tags, picture, color, repeatingDays}) {
     super();
     this._title = title;
     this._dueDate = dueDate;
+    this._dueTime = dueTime;
     this._tags = tags;
     this._picture = picture;
     this._color = color;
@@ -150,7 +151,7 @@ class TaskEdit extends Component {
                 <input
                   class="card__date"
                   type="text"
-                  placeholder="${moment(`20180923`).format(`DD MMMM`)}"
+                  placeholder="${this._dueDate}"
                   name="date"
                 />
               </label>
@@ -158,7 +159,7 @@ class TaskEdit extends Component {
                 <input
                   class="card__time"
                   type="text"
-                  placeholder="${moment(`20180923T0900`).format(`HH:mm`)}"
+                  placeholder="${this._dueTime}"
                   name="time"
                 />
               </label>
@@ -235,7 +236,8 @@ class TaskEdit extends Component {
       title: ``,
       color: ``,
       tags: new Set(),
-      dueDate: moment(new Date()).format(`DD MMMM h:mm`),
+      dueTime: ``,
+      dueDate: ``,
       repeatingDays: {
         'mo': false,
         'tu': false,
@@ -287,6 +289,23 @@ class TaskEdit extends Component {
     this._element.querySelector(`.card__form`).addEventListener(`submit`, this._onSubmitButtonClick);
     this._element.querySelector(`.card__date-deadline-toggle`).addEventListener(`click`, this._onChangeDate);
     this._element.querySelector(`.card__repeat-toggle`).addEventListener(`click`, this._onChangeRepeated);
+    const dateInputElement = this._element.querySelector(`.card__date`);
+    const timeInputElement = this._element.querySelector(`.card__time`);
+
+    if (this._state.isDate) {
+      flatpickr(dateInputElement, {
+        altInput: true,
+        altFormat: `j F`,
+        dateFormat: `j F`,
+      });
+      flatpickr(timeInputElement, {
+        enableTime: true,
+        noCalendar: true,
+        altInput: true,
+        altFormat: `h:i K`,
+        dateFormat: `h:i K`,
+      });
+    }
   }
 
   _removeListeners() {
@@ -305,6 +324,7 @@ class TaskEdit extends Component {
     this._color = data.color;
     this._repeatingDays = data.repeatingDays;
     this._dueDate = data.dueDate;
+    this._dueTime = data.dueTime;
   }
 
   static createMapper(target) {
@@ -319,7 +339,12 @@ class TaskEdit extends Component {
       repeat: (value) => {
         target.repeatingDays[value] = true;
       },
-      date: (value) => target.dueDate[value],
+      date: (value) => {
+        target.dueDate = value;
+      },
+      time: (value) => {
+        target.dueTime = value;
+      }
     };
   }
 }
