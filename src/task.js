@@ -147,11 +147,13 @@ class Task extends Component {
     this._element.querySelector(`.card__btn--edit`).removeEventListener(`click`, this._onEditButtonClick);
   }
 
-  update(data) {
+  update(data, state) {
     this._title = data.title;
     this._tags = data.tags;
     this._color = data.color;
     this._repeatingDays = data.repeatingDays;
+    this._dueDate = data.dueDate;
+    this._state.isRepeated = state;
   }
 }
 

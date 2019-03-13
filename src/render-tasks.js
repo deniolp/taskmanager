@@ -13,14 +13,14 @@ export default (item) => {
     taskComponent.unrender();
   };
 
-  editTaskComponent.onSubmit = (obj) => {
+  editTaskComponent.onSubmit = (obj, state) => {
     item.title = obj.title;
     item.tags = obj.tags;
     item.color = obj.color;
     item.repeatingDays = obj.repeatingDays;
     item.dueDate = obj.dueDate;
 
-    taskComponent.update(item);
+    taskComponent.update(item, state);
     taskComponent.render();
     cardsContainer.replaceChild(taskComponent.element, editTaskComponent.element);
     editTaskComponent.unrender();
