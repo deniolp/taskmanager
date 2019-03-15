@@ -288,6 +288,7 @@ class TaskEdit extends Component {
   _onCheckboxClick(evt) {
     if (evt.target.tagName.toLowerCase() === `input`) {
       this._element.classList.value = `card card--${evt.target.value} card--edit`;
+      this._color = evt.target.value;
     }
   }
 
