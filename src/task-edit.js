@@ -10,6 +10,13 @@ const DAYS = [
   `sa`,
   `su`
 ];
+const COLORS = [
+  `black`,
+  `yellow`,
+  `blue`,
+  `green`,
+  `pink`,
+];
 
 class TaskEdit extends Component {
   constructor({id, title, dueDate, dueTime, tags, picture, color, repeatingDays}) {
@@ -22,14 +29,6 @@ class TaskEdit extends Component {
     this._picture = picture;
     this._color = color;
     this._repeatingDays = repeatingDays;
-    this._COLORS = [
-      `black`,
-      `yellow`,
-      `blue`,
-      `green`,
-      `pink`,
-    ];
-    this._days = DAYS;
     this._state = {
       isDate: false,
       isRepeated: this._isRepeated(),
@@ -67,7 +66,7 @@ class TaskEdit extends Component {
   }
 
   _renderRepeatingDays() {
-    return this._days.map((key) => {
+    return DAYS.map((key) => {
       return `
       <input
         class="visually-hidden card__repeat-day-input"
@@ -85,7 +84,7 @@ class TaskEdit extends Component {
   }
 
   _renderColorCheckboxes() {
-    return this._COLORS.map((color) => {
+    return COLORS.map((color) => {
       return `
       <input
               type="radio"
