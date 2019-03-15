@@ -1,8 +1,9 @@
 import {Component} from './component';
 
 class Task extends Component {
-  constructor({title, dueDate, dueTime, tags, picture, color, repeatingDays}) {
+  constructor({id, title, dueDate, dueTime, tags, picture, color, repeatingDays}) {
     super();
+    this._id = id;
     this._title = title;
     this._dueDate = dueDate;
     this._dueTime = dueTime;

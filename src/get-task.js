@@ -17,7 +17,8 @@ const COLORS = [
 
 const getUrl = () => `http://picsum.photos/100/100?r=${Math.random()}`;
 
-export default () => ({
+export default (num) => ({
+  id: num,
   title: TITLES[getRandomNumber(0, 2)],
   dueDate: moment(`20180923`).format(`DD MMMM`),
   dueTime: moment(`20180923T0900`).format(`HH:mm a`),

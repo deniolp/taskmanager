@@ -12,8 +12,9 @@ const DAYS = [
 ];
 
 class TaskEdit extends Component {
-  constructor({title, dueDate, dueTime, tags, picture, color, repeatingDays}) {
+  constructor({id, title, dueDate, dueTime, tags, picture, color, repeatingDays}) {
     super();
+    this._id = id;
     this._title = title;
     this._dueDate = dueDate;
     this._dueTime = dueTime;
@@ -71,12 +72,12 @@ class TaskEdit extends Component {
       <input
         class="visually-hidden card__repeat-day-input"
         type="checkbox"
-        id="repeat-${key}-3"
+        id="repeat-${key}-${this._id}"
         name="repeat"
         value="${key}"
         ${this._repeatingDays[key] ? `checked` : ``}
       />
-      <label class="card__repeat-day" for="repeat-${key}-3"
+      <label class="card__repeat-day" for="repeat-${key}-${this._id}"
         >${key}</label
       >
     `;
@@ -88,13 +89,13 @@ class TaskEdit extends Component {
       return `
       <input
               type="radio"
-              id="color-${color}-3"
+              id="color-${color}-${this._id}"
               class="card__color-input card__color-input--${color} visually-hidden"
               name="color"
               value="${color}" ${this._color === `${color}` && `checked`}
             />
             <label
-              for="color-${color}-3"
+              for="color-${color}-${this._id}"
               class="card__color card__color--${color}"
               >${color}</label
             >
