@@ -65,7 +65,7 @@ class TaskEdit extends Component {
     }).join(``);
   }
 
-  _getRepeatingDays() {
+  _renderRepeatingDays() {
     return this._days.map((key) => {
       return `
       <input
@@ -83,7 +83,7 @@ class TaskEdit extends Component {
     }).join(``);
   }
 
-  _getColorCheckboxes() {
+  _renderColorCheckboxes() {
     return this._COLORS.map((color) => {
       return `
       <input
@@ -170,7 +170,7 @@ class TaskEdit extends Component {
 
             <fieldset class="card__repeat-days" ${!this._state.isRepeated && `disabled`}>
               <div class="card__repeat-days-inner">
-                ${this._getRepeatingDays()}
+                ${this._renderRepeatingDays()}
               </div>
             </fieldset>
           </div>
@@ -207,7 +207,7 @@ class TaskEdit extends Component {
         <div class="card__colors-inner">
           <h3 class="card__colors-title">Color</h3>
           <div class="card__colors-wrap">
-          ${this._getColorCheckboxes()}
+          ${this._renderColorCheckboxes()}
           </div>
         </div>
       </div>
