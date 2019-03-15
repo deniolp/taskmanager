@@ -1,6 +1,16 @@
 import {Component} from './component';
 import flatpickr from 'flatpickr';
 
+const DAYS = [
+  `mo`,
+  `tu`,
+  `we`,
+  `th`,
+  `fr`,
+  `sa`,
+  `su`
+];
+
 class TaskEdit extends Component {
   constructor({title, dueDate, dueTime, tags, picture, color, repeatingDays}) {
     super();
@@ -11,15 +21,6 @@ class TaskEdit extends Component {
     this._picture = picture;
     this._color = color;
     this._repeatingDays = repeatingDays;
-    this._DAYS = [
-      `mo`,
-      `tu`,
-      `we`,
-      `th`,
-      `fr`,
-      `sa`,
-      `su`
-    ];
     this._COLORS = [
       `black`,
       `yellow`,
@@ -27,7 +28,7 @@ class TaskEdit extends Component {
       `green`,
       `pink`,
     ];
-
+    this._days = DAYS;
     this._state = {
       isDate: false,
       isRepeated: this._isRepeated(),
@@ -65,7 +66,7 @@ class TaskEdit extends Component {
   }
 
   _getRepeatingDays() {
-    return this._DAYS.map((key) => {
+    return this._days.map((key) => {
       return `
       <input
         class="visually-hidden card__repeat-day-input"
