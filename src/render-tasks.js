@@ -13,7 +13,7 @@ export default (item) => {
     taskComponent.unrender();
   };
 
-  editTaskComponent.onSubmit = (obj, state) => {
+  editTaskComponent.onSubmit = (obj) => {
     item.title = obj.title;
     item.tags = obj.tags;
     item.color = obj.color;
@@ -21,7 +21,7 @@ export default (item) => {
     item.dueDate = obj.dueDate;
     item.dueTime = obj.dueTime;
 
-    taskComponent.update(item, state);
+    taskComponent.update(item);
     taskComponent.render();
     cardsContainer.replaceChild(taskComponent.element, editTaskComponent.element);
     editTaskComponent.unrender();

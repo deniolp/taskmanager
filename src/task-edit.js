@@ -266,7 +266,7 @@ class TaskEdit extends Component {
     const newData = this._processForm(formData);
 
     if (typeof this._onSubmit === `function`) {
-      this._onSubmit(newData, this._state.isRepeated);
+      this._onSubmit(newData);
     }
     this.update(newData);
   }
