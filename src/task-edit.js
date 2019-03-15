@@ -296,6 +296,7 @@ class TaskEdit extends Component {
         altInput: true,
         altFormat: `j F`,
         dateFormat: `j F`,
+        defaultDate: new Date(),
       });
       flatpickr(timeInputElement, {
         enableTime: true,
@@ -303,6 +304,7 @@ class TaskEdit extends Component {
         altInput: true,
         altFormat: `h:i K`,
         dateFormat: `h:i K`,
+        defaultDate: `9:00`,
       });
     }
   }
