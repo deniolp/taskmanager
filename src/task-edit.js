@@ -39,6 +39,8 @@ class TaskEdit extends Component {
     this._onChangeDate = this._onChangeDate.bind(this);
     this._onChangeRepeated = this._onChangeRepeated.bind(this);
     this._onCheckboxClick = this._onCheckboxClick.bind(this);
+    this._onDayofWeekClick = this._onDayofWeekClick.bind(this);
+    this._onDateChange = this._onDateChange.bind(this);
   }
 
   _isRepeated() {
@@ -294,11 +296,28 @@ class TaskEdit extends Component {
     }
   }
 
+  _onDayofWeekClick(evt) {
+    if (evt.target.tagName.toLowerCase() === `input`) {
+      this._repeatingDays[evt.target.value] = evt.target.checked;
+    }
+  }
+
+  _onDateChange(evt) {
+    if (evt.target.tagName.toLowerCase() === `input` && evt.target.classList.contains(`card__date`)) {
+      this._dueDate = evt.target.value;
+    }
+    if (evt.target.tagName.toLowerCase() === `input` && evt.target.classList.contains(`card__time`)) {
+      this._dueTime = evt.target.value;
+    }
+  }
+
   _addListeners() {
     this._element.querySelector(`.card__form`).addEventListener(`submit`, this._onSubmitButtonClick);
     this._element.querySelector(`.card__date-deadline-toggle`).addEventListener(`click`, this._onChangeDate);
     this._element.querySelector(`.card__repeat-toggle`).addEventListener(`click`, this._onChangeRepeated);
     this._element.querySelector(`.card__colors-wrap`).addEventListener(`click`, this._onCheckboxClick);
+    this._element.querySelector(`.card__repeat-days-inner`).addEventListener(`click`, this._onDayofWeekClick);
+    this._element.querySelector(`.card__date-deadline`).addEventListener(`change`, this._onDateChange);
     const dateInputElement = this._element.querySelector(`.card__date`);
     const timeInputElement = this._element.querySelector(`.card__time`);
 
@@ -325,6 +344,8 @@ class TaskEdit extends Component {
     this._element.querySelector(`.card__date-deadline-toggle`).removeEventListener(`click`, this._onChangeDate);
     this._element.querySelector(`.card__repeat-toggle`).removeEventListener(`click`, this._onChangeRepeated);
     this._element.querySelector(`.card__colors-wrap`).removeEventListener(`click`, this._onCheckboxClick);
+    this._element.querySelector(`.card__repeat-days-inner`).removeEventListener(`click`, this._onDayofWeekClick);
+    this._element.querySelector(`.card__date-deadline`).removeEventListener(`change`, this._onDateChange);
   }
 
   _partialUpdate() {
