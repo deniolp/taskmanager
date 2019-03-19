@@ -1,7 +1,7 @@
 import {getRandomNumber} from './utils';
 import getSet from './get-set';
+import moment from 'moment';
 
-const MILLISECONDS_PER_DAY = 24 * 60 * 60 * 1000;
 const TITLES = [
   `Изучить теорию`,
   `Сделать домашку`,
@@ -15,21 +15,22 @@ const COLORS = [
   `pink`,
 ];
 
-const getDate = () => Date.now() + 1 + getRandomNumber(0, 7) * MILLISECONDS_PER_DAY;
 const getUrl = () => `http://picsum.photos/100/100?r=${Math.random()}`;
 
-export default () => ({
+export default (num) => ({
+  id: num,
   title: TITLES[getRandomNumber(0, 2)],
-  dueDate: getDate(),
+  dueDate: moment(`20180923`).format(`DD MMMM`),
+  dueTime: moment(`20180923T0900`).format(`HH:mm a`),
   tags: getSet(),
   picture: getUrl(),
   color: COLORS[getRandomNumber(0, 4)],
   repeatingDays: {
-    'mo': true,
+    'mo': false,
     'tu': false,
     'we': false,
     'th': false,
-    'fr': true,
+    'fr': false,
     'sa': false,
     'su': false,
   },

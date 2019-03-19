@@ -1,14 +1,20 @@
 import {Component} from './component';
 
 class Task extends Component {
-  constructor({title, dueDate, tags, picture, color, repeatingDays}) {
+  constructor({id, title, dueDate, dueTime, tags, picture, color, repeatingDays}) {
     super();
+    this._id = id;
     this._title = title;
     this._dueDate = dueDate;
+    this._dueTime = dueTime;
     this._tags = tags;
     this._picture = picture;
     this._color = color;
     this._repeatingDays = repeatingDays;
+
+    this._state = {
+      isRepeated: this._isRepeated(),
+    };
 
     this._onEdit = null;
     this._onEditButtonClick = this._onEditButtonClick.bind(this);
@@ -32,7 +38,7 @@ class Task extends Component {
 
   get template() {
     const cardMarkup = `
-  <article class="card card--${this._color} ${this._isRepeated() ? `card--repeat` : ``}">
+  <article class="card card--${this._color} ${this._state.isRepeated ? `card--repeat` : ``}">
   <form class="card__form" method="get">
     <div class="card__inner">
       <div class="card__control">
@@ -62,9 +68,7 @@ class Task extends Component {
             class="card__text"
             placeholder="Start typing your text here..."
             name="text"
-          >
-  ${this._title}</textarea
-          >
+          >${this._title}</textarea>
         </label>
       </div>
 
@@ -77,16 +81,18 @@ class Task extends Component {
                 <input
                   class="card__date"
                   type="text"
-                  placeholder="${new Date(this._dueDate)}"
+                  placeholder="${this._dueDate}"
                   name="date"
+                  value="${this._dueDate}"
                 />
               </label>
               <label class="card__input-deadline-wrap">
                 <input
                   class="card__time"
                   type="text"
-                  placeholder="${new Date(this._dueDate)}"
+                  placeholder="${this._dueTime}"
                   name="time"
+                  value="${this._dueTime}"
                 />
               </label>
             </fieldset>
@@ -135,12 +141,22 @@ class Task extends Component {
     return typeof this._onEdit === `function` && this._onEdit();
   }
 
-  createListeners() {
+  _addListeners() {
     this._element.querySelector(`.card__btn--edit`).addEventListener(`click`, this._onEditButtonClick);
   }
 
-  removeListeners() {
+  _removeListeners() {
     this._element.querySelector(`.card__btn--edit`).removeEventListener(`click`, this._onEditButtonClick);
+  }
+
+  update(data) {
+    this._title = data.title;
+    this._tags = data.tags;
+    this._color = data.color;
+    this._repeatingDays = data.repeatingDays;
+    this._dueDate = data.dueDate;
+    this._dueTime = data.dueTime;
+    this._state.isRepeated = this._isRepeated();
   }
 }
 
