@@ -1,5 +1,6 @@
 import flatpickr from 'flatpickr';
 import Chart from 'chart.js';
+import moment from 'moment';
 
 export default () => {
   const statButtonElement = document.querySelector(`#control__statistic`);
@@ -17,7 +18,8 @@ export default () => {
     mode: `range`,
     altInput: true,
     altFormat: `j F`,
-    dateFormat: `j F`,
+    dateFormat: `Y-m-d`,
+    defaultDate: [moment().startOf(`week`).format(`YYYY-MM-DD`), moment().endOf(`week`).format(`YYYY-MM-DD`)],
   });
 
   statButtonElement.addEventListener(`click`, onStatClick);
