@@ -1,6 +1,5 @@
-import makeFilter from './make-filter';
+import {Filter} from './filter';
 import getTasks from './get-tasks';
-import {getRandomNumber} from './utils';
 import renderTasks from './render-tasks';
 
 const FILTERS = [
@@ -30,36 +29,31 @@ const FILTERS = [
   }
 ];
 
-const tasks = getTasks(7);
+const initialTasks = getTasks(7);
 
 const filtersContainer = document.querySelector(`.main__filter`);
 const cardsContainer = document.querySelector(`.board__tasks`);
+const filters = filtersContainer.querySelectorAll(`.filter__input:not([disabled]) + label`);
 
 const updateTask = (taskToUpdate, newTask) => {
-  const index = tasks.findIndex((item) => item === taskToUpdate);
+  const index = initialTasks.findIndex((item) => item === taskToUpdate);
 
-  tasks[index] = Object.assign({}, taskToUpdate, newTask);
-  return tasks[index];
+  initialTasks[index] = Object.assign({}, taskToUpdate, newTask);
+  return initialTasks[index];
 };
 
 const deleteTask = (taskToDelete) => {
-  const index = tasks.findIndex((item) => item === taskToDelete);
+  const index = initialTasks.findIndex((item) => item === taskToDelete);
 
-  tasks.splice(index, 1);
-  return tasks;
+  initialTasks.splice(index, 1);
+  return initialTasks;
 };
 
-FILTERS.forEach((item) => filtersContainer.appendChild(makeFilter(item.name, getRandomNumber(), item.isChecked, item.isDisabled)));
+FILTERS.forEach((item) => {
+  const taskComponent = new Filter(item.name, item.isChecked, item.isDisabled);
+  filtersContainer.appendChild(taskComponent.render());
+});
 
-const filters = filtersContainer.querySelectorAll(`.filter__input:not([disabled]) + label`);
-
-filters.forEach((item) => item.addEventListener(`click`, () => {
-  const tempAmount = item.textContent.match(/\d+/)[0];
-  cardsContainer.innerHTML = ``;
-
-  getTasks(tempAmount).forEach((elem) => renderTasks(elem));
-}));
-
-tasks.forEach((item) => renderTasks(item));
+initialTasks.forEach((item) => renderTasks(item));
 
 export {updateTask, deleteTask};
