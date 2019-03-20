@@ -8,6 +8,7 @@ class Filter extends Component {
     this._isDisabled = isDisabled;
 
     this._onFilter = null;
+    this._onFilterButtonClick = this._onFilterButtonClick.bind(this);
   }
 
   get template() {
@@ -24,6 +25,16 @@ class Filter extends Component {
 
   set onFilter(fn) {
     this._onFilter = fn;
+  }
+
+  _onFilterButtonClick(evt) {
+    if (typeof this._onFilter === `function`) {
+      this._onFilter(evt);
+    }
+  }
+
+  _addListeners() {
+    this._element.querySelector(`.filter__input`).addEventListener(`click`, this._onFilterButtonClick);
   }
 }
 

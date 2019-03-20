@@ -1,5 +1,6 @@
 import {Component} from './component';
 import flatpickr from 'flatpickr';
+import moment from 'moment';
 
 const DAYS = [
   `mo`,
@@ -156,9 +157,9 @@ class TaskEdit extends Component {
                 <input
                   class="card__date"
                   type="text"
-                  placeholder="${this._dueDate}"
+                  placeholder="${moment(this._dueDate).format(`DD MMMM`)}"
                   name="date"
-                  value="${this._dueDate}"
+                  value="${moment(this._dueDate).format(`DD MMMM`)}"
                 />
               </label>
               <label class="card__input-deadline-wrap">
@@ -311,7 +312,7 @@ class TaskEdit extends Component {
 
   _onDateChange(evt) {
     if (evt.target.tagName.toLowerCase() === `input` && evt.target.classList.contains(`card__date`)) {
-      this._dueDate = evt.target.value;
+      this._dueDate = moment(evt.target.value, `DD MMMM`);
     }
     if (evt.target.tagName.toLowerCase() === `input` && evt.target.classList.contains(`card__time`)) {
       this._dueTime = evt.target.value;
@@ -345,7 +346,7 @@ class TaskEdit extends Component {
         altInput: true,
         altFormat: `j F`,
         dateFormat: `j F`,
-        defaultDate: this._dueDate,
+        defaultDate: moment(this._dueDate).format(`DD MMMM`),
       });
       flatpickr(timeInputElement, {
         enableTime: true,
@@ -395,7 +396,7 @@ class TaskEdit extends Component {
         target.repeatingDays[value] = true;
       },
       date: (value) => {
-        target.dueDate = value;
+        target.dueDate = moment(value, `DD MMMM`);
       },
       time: (value) => {
         target.dueTime = value;

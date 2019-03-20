@@ -20,8 +20,8 @@ const getUrl = () => `http://picsum.photos/100/100?r=${Math.random()}`;
 export default (num) => ({
   id: num,
   title: TITLES[getRandomNumber(0, 2)],
-  dueDate: moment(`2018-09-23`, `YYYY-MM-DD`).format(`DD MMMM`),
-  dueTime: moment(`20180923T0900`).format(`HH:mm a`),
+  dueDate: moment(`2018-09-23`, `YYYY-MM-DD`),
+  dueTime: moment(`20180923T0900`).format(`HH:mm`),
   tags: getSet(),
   picture: getUrl(),
   color: COLORS[getRandomNumber(0, 4)],

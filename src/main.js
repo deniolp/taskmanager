@@ -10,31 +10,30 @@ const FILTERS = [
   },
   {
     name: `Overdue`,
-    isDisabled: true
   },
   {
     name: `Today`,
-    isDisabled: true
   },
   {
-    name: `Favorites`
+    name: `Favorites`,
+    isDisabled: true,
   },
   {
     name: `Repeating`
   },
   {
-    name: `Tags`
+    name: `Tags`,
+    isDisabled: true,
   },
   {
-    name: `Archive`
+    name: `Archive`,
+    isDisabled: true,
   }
 ];
 
 const initialTasks = getTasks(7);
-
 const filtersContainer = document.querySelector(`.main__filter`);
-const cardsContainer = document.querySelector(`.board__tasks`);
-const filters = filtersContainer.querySelectorAll(`.filter__input:not([disabled]) + label`);
+const taskContainer = document.querySelector(`.board__tasks`);
 
 const updateTask = (taskToUpdate, newTask) => {
   const index = initialTasks.findIndex((item) => item === taskToUpdate);
@@ -50,29 +49,38 @@ const deleteTask = (taskToDelete) => {
   return initialTasks;
 };
 
-FILTERS.forEach((item) => {
-  const taskComponent = new Filter(item.name, item.isChecked, item.isDisabled);
-  filtersContainer.appendChild(taskComponent.render());
-});
-
-const filterTasks = (filterName) => {
+const filterTasks = (tasks, filterName) => {
   switch (filterName) {
     case `filter__all`:
-      return initialTasks;
+      return tasks;
 
     case `filter__overdue`:
-      return initialTasks.filter((it) => it.dueDate < Date.now());
+      const today = moment(new Date());
+      return tasks.filter((it) => today.diff(moment(it.dueDate), `days`) > 0);
 
     case `filter__today`:
-      return initialTasks.filter((it) => it.dueDate === moment().format(`DD MMMM`));
+      return tasks.filter((it) => moment(it.dueDate).format(`DD MMMM`) === moment().format(`DD MMMM`));
 
     case `filter__repeating`:
-      return initialTasks.filter((it) => [...Object.entries(it.repeatingDays)].some((day) => day[1]));
+      return tasks.filter((it) => [...Object.entries(it.repeatingDays)].some((day) => day[1]));
 
     default:
-      return initialTasks;
+      return tasks;
   }
 };
+
+FILTERS.forEach((item) => {
+  const filterComponent = new Filter(item.name, item.isChecked, item.isDisabled);
+  filtersContainer.appendChild(filterComponent.render());
+
+  filterComponent.onFilter = (evt) => {
+    const filterName = evt.target.id;
+    const filteredTasks = filterTasks(initialTasks, filterName);
+
+    taskContainer.innerHTML = ``;
+    filteredTasks.forEach((task) => renderTasks(task));
+  };
+});
 
 initialTasks.forEach((item) => renderTasks(item));
 
