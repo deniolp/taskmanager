@@ -1,6 +1,7 @@
 import {Filter} from './filter';
 import getTasks from './get-tasks';
 import renderTasks from './render-tasks';
+import moment from 'moment';
 
 const FILTERS = [
   {
@@ -53,6 +54,25 @@ FILTERS.forEach((item) => {
   const taskComponent = new Filter(item.name, item.isChecked, item.isDisabled);
   filtersContainer.appendChild(taskComponent.render());
 });
+
+const filterTasks = (filterName) => {
+  switch (filterName) {
+    case `filter__all`:
+      return initialTasks;
+
+    case `filter__overdue`:
+      return initialTasks.filter((it) => it.dueDate < Date.now());
+
+    case `filter__today`:
+      return initialTasks.filter((it) => it.dueDate === moment().format(`DD MMMM`));
+
+    case `filter__repeating`:
+      return initialTasks.filter((it) => [...Object.entries(it.repeatingDays)].some((day) => day[1]));
+
+    default:
+      return initialTasks;
+  }
+};
 
 initialTasks.forEach((item) => renderTasks(item));
 
