@@ -2,6 +2,7 @@ import {Filter} from './filter';
 import getTasks from './get-tasks';
 import renderTasks from './render-tasks';
 import moment from 'moment';
+import chart from './chart';
 
 const FILTERS = [
   {
@@ -88,5 +89,7 @@ FILTERS.forEach((item) => {
 });
 
 initialTasks.forEach((item) => renderTasks(item));
+
+chart();
 
 export {updateTask, deleteTask};
