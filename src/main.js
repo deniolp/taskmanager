@@ -38,7 +38,12 @@ const taskContainer = document.querySelector(`.board__tasks`);
 const updateTask = (taskToUpdate, newTask) => {
   const index = initialTasks.findIndex((item) => item === taskToUpdate);
 
-  initialTasks[index] = Object.assign({}, taskToUpdate, newTask);
+  for (const key of Object.keys(newTask)) {
+    if (key in initialTasks[index] && newTask[key] !== ``) {
+      initialTasks[index][key] = newTask[key];
+    }
+  }
+
   return initialTasks[index];
 };
 

@@ -155,12 +155,8 @@ class Task extends Component {
     this._tags = data.tags;
     this._color = data.color;
     this._repeatingDays = data.repeatingDays;
-    if (data.dueDate) {
-      this._dueDate = moment(data.dueDate);
-    }
-    if (data.dueTime) {
-      this._dueTime = data.dueTime;
-    }
+    this._dueDate = data.dueDate;
+    this._dueTime = data.dueTime;
     this._state.isRepeated = this._isRepeated();
   }
 }
