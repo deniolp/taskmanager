@@ -2,7 +2,8 @@ import {Component} from './component';
 import moment from 'moment';
 
 class Task extends Component {
-  constructor({id, title, dueDate, dueTime, tags, picture, color, repeatingDays}) {
+  constructor({id, title, dueDate, dueTime,
+    tags, picture, color, repeatingDays}) {
     super();
     this._id = id;
     this._title = title;

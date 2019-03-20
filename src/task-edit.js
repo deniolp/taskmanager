@@ -20,10 +20,12 @@ const COLORS = [
 ];
 
 class TaskEdit extends Component {
-  constructor({id, title, dueDate, dueTime, tags, picture, color, repeatingDays}) {
+  constructor({id, title, dueDate, dueTime,
+    tags, picture, color, repeatingDays}) {
     super();
     this._id = id;
     this._title = title;
+    this._defaultDate = dueDate;
     this._dueDate = dueDate;
     this._dueTime = dueTime;
     this._tags = tags;
