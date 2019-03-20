@@ -12,8 +12,8 @@ class Task extends Component {
     this._picture = picture;
     this._color = color;
     this._repeatingDays = repeatingDays;
+
     this._state = {
-      isDate: false,
       isRepeated: this._isRepeated(),
     };
 
@@ -155,8 +155,12 @@ class Task extends Component {
     this._tags = data.tags;
     this._color = data.color;
     this._repeatingDays = data.repeatingDays;
-    this._dueDate = data.dueDate;
-    this._dueTime = data.dueTime;
+    if (data.dueDate) {
+      this._dueDate = moment(data.dueDate);
+    }
+    if (data.dueTime) {
+      this._dueTime = data.dueTime;
+    }
     this._state.isRepeated = this._isRepeated();
   }
 }

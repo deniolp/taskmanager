@@ -379,8 +379,12 @@ class TaskEdit extends Component {
     this._tags = data.tags;
     this._color = data.color;
     this._repeatingDays = data.repeatingDays;
-    this._dueDate = data.dueDate;
-    this._dueTime = data.dueTime;
+    if (data.dueDate) {
+      this._dueDate = data.dueDate;
+    }
+    if (data.dueTime) {
+      this._dueTime = data.dueTime;
+    }
   }
 
   static createMapper(target) {
