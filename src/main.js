@@ -30,8 +30,17 @@ const FILTERS = [
   }
 ];
 
+const tasks = getTasks(7);
+
 const filtersContainer = document.querySelector(`.main__filter`);
 const cardsContainer = document.querySelector(`.board__tasks`);
+
+const deleteTask = (taskToDelete) => {
+  const index = tasks.findIndex((item) => item === taskToDelete);
+
+  tasks.splice(index, 1);
+  return tasks;
+};
 
 FILTERS.forEach((item) => filtersContainer.appendChild(makeFilter(item.name, getRandomNumber(), item.isChecked, item.isDisabled)));
 
@@ -44,4 +53,6 @@ filters.forEach((item) => item.addEventListener(`click`, () => {
   getTasks(tempAmount).forEach((elem) => renderTasks(elem));
 }));
 
-getTasks(7).forEach((item) => renderTasks(item));
+tasks.forEach((item) => renderTasks(item));
+
+export {deleteTask};

@@ -35,12 +35,14 @@ class TaskEdit extends Component {
     };
 
     this._onSubmit = null;
+    this._onDelete = null;
     this._onSubmitButtonClick = this._onSubmitButtonClick.bind(this);
     this._onChangeDate = this._onChangeDate.bind(this);
     this._onChangeRepeated = this._onChangeRepeated.bind(this);
     this._onCheckboxClick = this._onCheckboxClick.bind(this);
     this._onDayofWeekClick = this._onDayofWeekClick.bind(this);
     this._onDateChange = this._onDateChange.bind(this);
+    this._onDeleteClick = this._onDeleteClick.bind(this);
   }
 
   _isRepeated() {
@@ -235,6 +237,10 @@ class TaskEdit extends Component {
     this._onSubmit = fn;
   }
 
+  set onDelete(fn) {
+    this._onDelete = fn;
+  }
+
   _processForm(formData) {
     const entry = {
       title: ``,
@@ -311,6 +317,12 @@ class TaskEdit extends Component {
     }
   }
 
+  _onDeleteClick() {
+    if (typeof this._onDelete === `function`) {
+      this._onDelete();
+    }
+  }
+
   _addListeners() {
     this._element.querySelector(`.card__form`).addEventListener(`submit`, this._onSubmitButtonClick);
     this._element.querySelector(`.card__date-deadline-toggle`).addEventListener(`click`, this._onChangeDate);
@@ -318,6 +330,7 @@ class TaskEdit extends Component {
     this._element.querySelector(`.card__colors-wrap`).addEventListener(`click`, this._onCheckboxClick);
     this._element.querySelector(`.card__repeat-days-inner`).addEventListener(`click`, this._onDayofWeekClick);
     this._element.querySelector(`.card__date-deadline`).addEventListener(`change`, this._onDateChange);
+    this._element.querySelector(`.card__delete`).addEventListener(`click`, this._onDeleteClick);
     const dateInputElement = this._element.querySelector(`.card__date`);
     const timeInputElement = this._element.querySelector(`.card__time`);
 
@@ -346,6 +359,7 @@ class TaskEdit extends Component {
     this._element.querySelector(`.card__colors-wrap`).removeEventListener(`click`, this._onCheckboxClick);
     this._element.querySelector(`.card__repeat-days-inner`).removeEventListener(`click`, this._onDayofWeekClick);
     this._element.querySelector(`.card__date-deadline`).removeEventListener(`change`, this._onDateChange);
+    this._element.querySelector(`.card__delete`).removeEventListener(`click`, this._onDeleteClick);
   }
 
   _partialUpdate() {
