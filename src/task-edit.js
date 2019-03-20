@@ -365,6 +365,7 @@ class TaskEdit extends Component {
     this._element.querySelector(`.card__colors-wrap`).removeEventListener(`click`, this._onCheckboxClick);
     this._element.querySelector(`.card__repeat-days-inner`).removeEventListener(`click`, this._onDayofWeekClick);
     this._element.querySelector(`.card__date-deadline`).removeEventListener(`change`, this._onDateChange);
+    this._element.querySelector(`.card__text`).removeEventListener(`change`, this._onTextChange);
     this._element.querySelector(`.card__delete`).removeEventListener(`click`, this._onDeleteClick);
   }
 

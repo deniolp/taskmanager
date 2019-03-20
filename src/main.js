@@ -35,6 +35,13 @@ const tasks = getTasks(7);
 const filtersContainer = document.querySelector(`.main__filter`);
 const cardsContainer = document.querySelector(`.board__tasks`);
 
+const updateTask = (taskToUpdate, newTask) => {
+  const index = tasks.findIndex((item) => item === taskToUpdate);
+
+  tasks[index] = Object.assign({}, taskToUpdate, newTask);
+  return tasks[index];
+};
+
 const deleteTask = (taskToDelete) => {
   const index = tasks.findIndex((item) => item === taskToDelete);
 
@@ -55,4 +62,4 @@ filters.forEach((item) => item.addEventListener(`click`, () => {
 
 tasks.forEach((item) => renderTasks(item));
 
-export {deleteTask};
+export {updateTask, deleteTask};

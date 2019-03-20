@@ -1,6 +1,6 @@
 import {Task} from './task';
 import {TaskEdit} from './task-edit';
-import {deleteTask} from './main';
+import {updateTask, deleteTask} from './main';
 
 export default (item) => {
   const taskContainer = document.querySelector(`.board__tasks`);
@@ -22,14 +22,9 @@ export default (item) => {
   };
 
   editTaskComponent.onSubmit = (obj) => {
-    item.title = obj.title;
-    item.tags = obj.tags;
-    item.color = obj.color;
-    item.repeatingDays = obj.repeatingDays;
-    item.dueDate = obj.dueDate;
-    item.dueTime = obj.dueTime;
+    const updatedTask = updateTask(item, obj);
 
-    taskComponent.update(item);
+    taskComponent.update(updatedTask);
     taskComponent.render();
     taskContainer.replaceChild(taskComponent.element, editTaskComponent.element);
     editTaskComponent.unrender();
