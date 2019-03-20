@@ -43,6 +43,7 @@ class TaskEdit extends Component {
     this._onDayofWeekClick = this._onDayofWeekClick.bind(this);
     this._onDateChange = this._onDateChange.bind(this);
     this._onDeleteClick = this._onDeleteClick.bind(this);
+    this._onTextChange = this._onTextChange.bind(this);
   }
 
   _isRepeated() {
@@ -317,6 +318,10 @@ class TaskEdit extends Component {
     }
   }
 
+  _onTextChange(evt) {
+    this._title = evt.target.value;
+  }
+
   _onDeleteClick() {
     if (typeof this._onDelete === `function`) {
       this._onDelete();
@@ -330,6 +335,7 @@ class TaskEdit extends Component {
     this._element.querySelector(`.card__colors-wrap`).addEventListener(`click`, this._onCheckboxClick);
     this._element.querySelector(`.card__repeat-days-inner`).addEventListener(`click`, this._onDayofWeekClick);
     this._element.querySelector(`.card__date-deadline`).addEventListener(`change`, this._onDateChange);
+    this._element.querySelector(`.card__text`).addEventListener(`change`, this._onTextChange);
     this._element.querySelector(`.card__delete`).addEventListener(`click`, this._onDeleteClick);
     const dateInputElement = this._element.querySelector(`.card__date`);
     const timeInputElement = this._element.querySelector(`.card__time`);
