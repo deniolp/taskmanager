@@ -9,6 +9,7 @@ const tagsCtx = document.querySelector(`.statistic__tags`);
 const colorsCtx = document.querySelector(`.statistic__colors`);
 const firstDay = moment().startOf(`isoWeek`);
 const lastDay = moment().endOf(`isoWeek`);
+const foundedTaskAmountElement = document.querySelector(`.statistic__task-found`);
 
 let tagsChart = null;
 let colorsChart = null;
@@ -164,8 +165,8 @@ const filterTasks = (fistDate, secondDate, tasks) => {
   const filteredTasks = tasks.filter((task) => {
     return task.dueDate > moment(fistDate).format(`x`) && task.dueDate < moment(secondDate).format(`x`);
   });
+  foundedTaskAmountElement.textContent = filteredTasks.length;
   return filteredTasks;
-
 };
 
 const getTagStat = (fistDate, secondDate, tasks) => {
