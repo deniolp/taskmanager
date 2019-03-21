@@ -2,7 +2,7 @@ import {Filter} from './filter';
 import getTasks from './get-tasks';
 import renderTasks from './render-tasks';
 import moment from 'moment';
-import chart from './chart';
+import {drawStat} from './draw-stat';
 
 const FILTERS = [
   {
@@ -90,6 +90,17 @@ FILTERS.forEach((item) => {
 
 initialTasks.forEach((item) => renderTasks(item));
 
-chart();
+const statButtonElement = document.querySelector(`#control__statistic`);
+const taskBoard = document.querySelector(`.board.container`);
+const statBoard = document.querySelector(`.statistic`);
+
+
+const onStatClick = () => {
+  statBoard.classList.remove(`visually-hidden`);
+  taskBoard.classList.add(`visually-hidden`);
+  drawStat(initialTasks);
+};
+
+statButtonElement.addEventListener(`click`, onStatClick);
 
 export {updateTask, deleteTask};
