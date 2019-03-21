@@ -179,7 +179,7 @@ const getTagStat = (fistDate, secondDate, tasks) => {
       }
     });
   });
-  const labels = Object.keys(tagsStats);
+  const labels = Object.keys(tagsStats).map((item) => `#${item}`);
   const values = Object.values(tagsStats);
 
   return {labels, values};
