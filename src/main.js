@@ -36,6 +36,8 @@ const initialTasks = getTasks(7);
 const filtersContainer = document.querySelector(`.main__filter`);
 const taskContainer = document.querySelector(`.board__tasks`);
 
+let isStatDone = false;
+
 const updateTask = (taskToUpdate, newTask) => {
   const index = initialTasks.findIndex((item) => item === taskToUpdate);
 
@@ -91,16 +93,26 @@ FILTERS.forEach((item) => {
 initialTasks.forEach((item) => renderTasks(item));
 
 const statButtonElement = document.querySelector(`#control__statistic`);
+const tasksButtonElement = document.querySelector(`#control__task`);
 const taskBoard = document.querySelector(`.board.container`);
 const statBoard = document.querySelector(`.statistic`);
 
 
 const onStatClick = () => {
+  if (!isStatDone) {
+    drawStat(initialTasks);
+  }
+  isStatDone = true;
   statBoard.classList.remove(`visually-hidden`);
   taskBoard.classList.add(`visually-hidden`);
-  drawStat(initialTasks);
+};
+
+const onTasksClick = () => {
+  statBoard.classList.add(`visually-hidden`);
+  taskBoard.classList.remove(`visually-hidden`);
 };
 
 statButtonElement.addEventListener(`click`, onStatClick);
+tasksButtonElement.addEventListener(`click`, onTasksClick);
 
 export {updateTask, deleteTask};
