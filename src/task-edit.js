@@ -1,5 +1,6 @@
 import {Component} from './component';
 import flatpickr from 'flatpickr';
+import moment from 'moment';
 
 const DAYS = [
   `mo`,
@@ -19,10 +20,12 @@ const COLORS = [
 ];
 
 class TaskEdit extends Component {
-  constructor({id, title, dueDate, dueTime, tags, picture, color, repeatingDays}) {
+  constructor({id, title, dueDate, dueTime,
+    tags, picture, color, repeatingDays}) {
     super();
     this._id = id;
     this._title = title;
+    this._defaultDate = dueDate;
     this._dueDate = dueDate;
     this._dueTime = dueTime;
     this._tags = tags;
@@ -35,12 +38,15 @@ class TaskEdit extends Component {
     };
 
     this._onSubmit = null;
+    this._onDelete = null;
     this._onSubmitButtonClick = this._onSubmitButtonClick.bind(this);
     this._onChangeDate = this._onChangeDate.bind(this);
     this._onChangeRepeated = this._onChangeRepeated.bind(this);
     this._onCheckboxClick = this._onCheckboxClick.bind(this);
     this._onDayofWeekClick = this._onDayofWeekClick.bind(this);
     this._onDateChange = this._onDateChange.bind(this);
+    this._onDeleteClick = this._onDeleteClick.bind(this);
+    this._onTextChange = this._onTextChange.bind(this);
   }
 
   _isRepeated() {
@@ -153,9 +159,9 @@ class TaskEdit extends Component {
                 <input
                   class="card__date"
                   type="text"
-                  placeholder="${this._dueDate}"
+                  placeholder="${moment(this._dueDate).format(`DD MMMM`)}"
                   name="date"
-                  value="${this._dueDate}"
+                  value="${moment(this._dueDate).format(`DD MMMM`)}"
                 />
               </label>
               <label class="card__input-deadline-wrap">
@@ -235,6 +241,10 @@ class TaskEdit extends Component {
     this._onSubmit = fn;
   }
 
+  set onDelete(fn) {
+    this._onDelete = fn;
+  }
+
   _processForm(formData) {
     const entry = {
       title: ``,
@@ -304,10 +314,20 @@ class TaskEdit extends Component {
 
   _onDateChange(evt) {
     if (evt.target.tagName.toLowerCase() === `input` && evt.target.classList.contains(`card__date`)) {
-      this._dueDate = evt.target.value;
+      this._dueDate = moment(evt.target.value, `DD MMMM`);
     }
     if (evt.target.tagName.toLowerCase() === `input` && evt.target.classList.contains(`card__time`)) {
       this._dueTime = evt.target.value;
+    }
+  }
+
+  _onTextChange(evt) {
+    this._title = evt.target.value;
+  }
+
+  _onDeleteClick() {
+    if (typeof this._onDelete === `function`) {
+      this._onDelete();
     }
   }
 
@@ -318,6 +338,8 @@ class TaskEdit extends Component {
     this._element.querySelector(`.card__colors-wrap`).addEventListener(`click`, this._onCheckboxClick);
     this._element.querySelector(`.card__repeat-days-inner`).addEventListener(`click`, this._onDayofWeekClick);
     this._element.querySelector(`.card__date-deadline`).addEventListener(`change`, this._onDateChange);
+    this._element.querySelector(`.card__text`).addEventListener(`change`, this._onTextChange);
+    this._element.querySelector(`.card__delete`).addEventListener(`click`, this._onDeleteClick);
     const dateInputElement = this._element.querySelector(`.card__date`);
     const timeInputElement = this._element.querySelector(`.card__time`);
 
@@ -326,7 +348,7 @@ class TaskEdit extends Component {
         altInput: true,
         altFormat: `j F`,
         dateFormat: `j F`,
-        defaultDate: this._dueDate,
+        defaultDate: moment(this._dueDate).format(`DD MMMM`),
       });
       flatpickr(timeInputElement, {
         enableTime: true,
@@ -346,6 +368,8 @@ class TaskEdit extends Component {
     this._element.querySelector(`.card__colors-wrap`).removeEventListener(`click`, this._onCheckboxClick);
     this._element.querySelector(`.card__repeat-days-inner`).removeEventListener(`click`, this._onDayofWeekClick);
     this._element.querySelector(`.card__date-deadline`).removeEventListener(`change`, this._onDateChange);
+    this._element.querySelector(`.card__text`).removeEventListener(`change`, this._onTextChange);
+    this._element.querySelector(`.card__delete`).removeEventListener(`click`, this._onDeleteClick);
   }
 
   _partialUpdate() {
@@ -357,8 +381,12 @@ class TaskEdit extends Component {
     this._tags = data.tags;
     this._color = data.color;
     this._repeatingDays = data.repeatingDays;
-    this._dueDate = data.dueDate;
-    this._dueTime = data.dueTime;
+    if (data.dueDate) {
+      this._dueDate = data.dueDate;
+    }
+    if (data.dueTime) {
+      this._dueTime = data.dueTime;
+    }
   }
 
   static createMapper(target) {
@@ -374,7 +402,7 @@ class TaskEdit extends Component {
         target.repeatingDays[value] = true;
       },
       date: (value) => {
-        target.dueDate = value;
+        target.dueDate = moment(value, `DD MMMM`);
       },
       time: (value) => {
         target.dueTime = value;
