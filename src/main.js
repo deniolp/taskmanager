@@ -78,11 +78,13 @@ const renderTask = (item) => {
   editTaskComponent.onSubmit = (obj) => {
     const block = () => {
       editTaskComponent.element.querySelector(`.card__save`).disabled = true;
+      editTaskComponent.element.querySelector(`.card__save`).textContent = `saving`;
       editTaskComponent.element.querySelector(`.card__text`).disabled = true;
     };
 
     const unblock = () => {
       editTaskComponent.element.querySelector(`.card__save`).disabled = false;
+      editTaskComponent.element.querySelector(`.card__save`).textContent = `save`;
       editTaskComponent.element.querySelector(`.card__text`).disabled = false;
     };
 
