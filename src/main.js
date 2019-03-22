@@ -94,13 +94,6 @@ const updateTask = (taskToUpdate, newTask) => {
   return taskToUpdate;
 };
 
-const deleteTask = (taskToDelete) => {
-  const index = initialTasks.findIndex((item) => item === taskToDelete);
-
-  initialTasks.splice(index, 1);
-  return initialTasks;
-};
-
 const filterTasks = (tasks, filterName) => {
   switch (filterName) {
     case `filter__all`:
