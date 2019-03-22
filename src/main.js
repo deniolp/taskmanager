@@ -47,6 +47,7 @@ const statButtonElement = document.querySelector(`#control__statistic`);
 const tasksButtonElement = document.querySelector(`#control__task`);
 const taskBoard = document.querySelector(`.board.container`);
 const statBoard = document.querySelector(`.statistic`);
+const emptyBoard = document.querySelector(`.board__no-tasks`);
 
 const renderTask = (item) => {
   const taskComponent = new Task(item);
@@ -146,6 +147,15 @@ const onTasksClick = () => {
   taskBoard.classList.remove(`visually-hidden`);
 };
 
+const showEmptyBoard = () => {
+  emptyBoard.textContent = `Loading tasks...`;
+  emptyBoard.classList.remove(`visually-hidden`);
+};
+
+const removeEmptyBoard = () => {
+  emptyBoard.classList.add(`visually-hidden`);
+};
+
 FILTERS.forEach((item) => {
   const filterComponent = new Filter(item.name, item.isChecked, item.isDisabled);
   filtersContainer.appendChild(filterComponent.render());
@@ -159,8 +169,11 @@ FILTERS.forEach((item) => {
   };
 });
 
+showEmptyBoard();
+
 api.getTasks()
 .then((tasks) => {
+  removeEmptyBoard();
   initialTasks = tasks;
   initialTasks.forEach(renderTask);
 });
