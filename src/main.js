@@ -36,8 +36,6 @@ const initialTasks = getTasks(7);
 const filtersContainer = document.querySelector(`.main__filter`);
 const taskContainer = document.querySelector(`.board__tasks`);
 
-let isStatDone = false;
-
 const updateTask = (taskToUpdate, newTask) => {
   for (const key of Object.keys(newTask)) {
     if (key in taskToUpdate && newTask[key] !== ``) {
@@ -97,10 +95,8 @@ const statBoard = document.querySelector(`.statistic`);
 
 
 const onStatClick = () => {
-  if (!isStatDone) {
-    drawStat(initialTasks);
-  }
-  isStatDone = true;
+  drawStat(initialTasks);
+
   statBoard.classList.remove(`visually-hidden`);
   taskBoard.classList.add(`visually-hidden`);
 };
