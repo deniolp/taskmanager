@@ -96,6 +96,10 @@ const renderTask = (item) => {
 
       taskContainer.replaceChild(taskComponent.element, editTaskComponent.element);
       editTaskComponent.unrender();
+    })
+    .catch(() => {
+      editTaskComponent.shake();
+      unblock();
     });
   };
 };
