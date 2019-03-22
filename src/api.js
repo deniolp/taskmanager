@@ -13,6 +13,10 @@ const checkStatus = (response) => {
   }
 };
 
+const toJSON = (response) => {
+  return response.json();
+};
+
 const API = class {
   constructor({endPoint, authorization}) {
     this._endPoint = endPoint;
@@ -20,11 +24,20 @@ const API = class {
   }
 
   getTasks() {
-
+    return this._load({url: `tasks`})
+    .then(toJSON);
   }
 
-  createTask() {
-
+  createTask({task}) {
+    return this._load({
+      url: `tasks`,
+      method: Method.POST,
+      body: JSON.stringify(task),
+      headers: new Headers({
+        'Content-Type': `application/json`
+      })
+    })
+    .then(toJSON);
   }
 
   updateTask() {
