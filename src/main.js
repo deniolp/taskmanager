@@ -77,10 +77,14 @@ const renderTask = (item) => {
   editTaskComponent.onSubmit = (obj) => {
     const updatedTask = updateTask(item, obj);
 
-    taskComponent.update(updatedTask);
-    taskComponent.render();
-    taskContainer.replaceChild(taskComponent.element, editTaskComponent.element);
-    editTaskComponent.unrender();
+    api.updateTask({id: updatedTask.id, data: updatedTask.toRAW()})
+    .then((newTask) => {
+      taskComponent.update(newTask);
+      taskComponent.render();
+
+      taskContainer.replaceChild(taskComponent.element, editTaskComponent.element);
+      editTaskComponent.unrender();
+    });
   };
 };
 

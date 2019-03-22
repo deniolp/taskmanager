@@ -14,6 +14,20 @@ export default class ModelTask {
     this.isDone = Boolean(data[`is_done`]);
   }
 
+  toRAW() {
+    return {
+      'id': this.id,
+      'title': this.title,
+      'due_date': this.dueDate,
+      'tags': [...this.tags.values()],
+      'picture': this.picture,
+      'repeating_days': this.repeatingDays,
+      'color': this.color,
+      'is_favorite': this.isFavorite,
+      'is_done': this.isDone,
+    };
+  }
+
   static parseTask(data) {
     return new ModelTask(data);
   }
