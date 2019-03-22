@@ -1,8 +1,9 @@
 import {Filter} from './filter';
 import getTasks from './get-tasks';
-import renderTask from './render-task';
 import moment from 'moment';
 import {drawStat} from './draw-stat';
+import {Task} from './task';
+import {TaskEdit} from './task-edit';
 
 const FILTERS = [
   {
@@ -35,6 +36,38 @@ const FILTERS = [
 const initialTasks = getTasks(7);
 const filtersContainer = document.querySelector(`.main__filter`);
 const taskContainer = document.querySelector(`.board__tasks`);
+const statButtonElement = document.querySelector(`#control__statistic`);
+const tasksButtonElement = document.querySelector(`#control__task`);
+const taskBoard = document.querySelector(`.board.container`);
+const statBoard = document.querySelector(`.statistic`);
+
+const renderTask = (item) => {
+  const taskComponent = new Task(item);
+  const editTaskComponent = new TaskEdit(item);
+  taskContainer.appendChild(taskComponent.render());
+
+  taskComponent.onEdit = () => {
+    editTaskComponent.render();
+    taskContainer.replaceChild(editTaskComponent.element, taskComponent.element);
+    taskComponent.unrender();
+  };
+
+  editTaskComponent.onDelete = () => {
+    deleteTask(item);
+
+    taskContainer.removeChild(editTaskComponent.element);
+    editTaskComponent.unrender();
+  };
+
+  editTaskComponent.onSubmit = (obj) => {
+    const updatedTask = updateTask(item, obj);
+
+    taskComponent.update(updatedTask);
+    taskComponent.render();
+    taskContainer.replaceChild(taskComponent.element, editTaskComponent.element);
+    editTaskComponent.unrender();
+  };
+};
 
 const updateTask = (taskToUpdate, newTask) => {
   for (const key of Object.keys(newTask)) {
@@ -73,6 +106,18 @@ const filterTasks = (tasks, filterName) => {
   }
 };
 
+const onStatClick = () => {
+  drawStat(initialTasks);
+
+  statBoard.classList.remove(`visually-hidden`);
+  taskBoard.classList.add(`visually-hidden`);
+};
+
+const onTasksClick = () => {
+  statBoard.classList.add(`visually-hidden`);
+  taskBoard.classList.remove(`visually-hidden`);
+};
+
 FILTERS.forEach((item) => {
   const filterComponent = new Filter(item.name, item.isChecked, item.isDisabled);
   filtersContainer.appendChild(filterComponent.render());
@@ -88,25 +133,5 @@ FILTERS.forEach((item) => {
 
 initialTasks.forEach(renderTask);
 
-const statButtonElement = document.querySelector(`#control__statistic`);
-const tasksButtonElement = document.querySelector(`#control__task`);
-const taskBoard = document.querySelector(`.board.container`);
-const statBoard = document.querySelector(`.statistic`);
-
-
-const onStatClick = () => {
-  drawStat(initialTasks);
-
-  statBoard.classList.remove(`visually-hidden`);
-  taskBoard.classList.add(`visually-hidden`);
-};
-
-const onTasksClick = () => {
-  statBoard.classList.add(`visually-hidden`);
-  taskBoard.classList.remove(`visually-hidden`);
-};
-
 statButtonElement.addEventListener(`click`, onStatClick);
 tasksButtonElement.addEventListener(`click`, onTasksClick);
-
-export {updateTask, deleteTask};
