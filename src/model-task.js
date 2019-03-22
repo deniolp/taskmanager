@@ -10,4 +10,12 @@ export default class ModelTask {
     this.isFavorite = Boolean(data[`is_favorite`]);
     this.isDone = Boolean(data[`is_done`]);
   }
+
+  static parseTask(data) {
+    return new ModelTask(data);
+  }
+
+  static parseTasks(data) {
+    return data.map(ModelTask.parseTask);
+  }
 }
