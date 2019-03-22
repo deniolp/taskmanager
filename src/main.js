@@ -1,6 +1,6 @@
 import {Filter} from './filter';
 import getTasks from './get-tasks';
-import renderTasks from './render-tasks';
+import renderTask from './render-task';
 import moment from 'moment';
 import {drawStat} from './draw-stat';
 
@@ -39,15 +39,13 @@ const taskContainer = document.querySelector(`.board__tasks`);
 let isStatDone = false;
 
 const updateTask = (taskToUpdate, newTask) => {
-  const index = initialTasks.findIndex((item) => item === taskToUpdate);
-
   for (const key of Object.keys(newTask)) {
-    if (key in initialTasks[index] && newTask[key] !== ``) {
-      initialTasks[index][key] = newTask[key];
+    if (key in taskToUpdate && newTask[key] !== ``) {
+      taskToUpdate[key] = newTask[key];
     }
   }
 
-  return initialTasks[index];
+  return taskToUpdate;
 };
 
 const deleteTask = (taskToDelete) => {
@@ -86,11 +84,11 @@ FILTERS.forEach((item) => {
     const filteredTasks = filterTasks(initialTasks, filterName);
 
     taskContainer.innerHTML = ``;
-    filteredTasks.forEach((task) => renderTasks(task));
+    filteredTasks.forEach(renderTask);
   };
 });
 
-initialTasks.forEach((item) => renderTasks(item));
+initialTasks.forEach(renderTask);
 
 const statButtonElement = document.querySelector(`#control__statistic`);
 const tasksButtonElement = document.querySelector(`#control__task`);
