@@ -1,10 +1,16 @@
 import {Filter} from './filter';
-import getTasks from './get-tasks';
 import moment from 'moment';
 import {drawStat} from './draw-stat';
 import {Task} from './task';
 import {TaskEdit} from './task-edit';
+import {API} from './api';
 
+const AUTHORIZATION = `Basic kjdwhiu3ye7833&^%*&hkdhwu`;
+const END_POINT = `https://es8-demo-srv.appspot.com/task-manager/`;
+const api = new API({
+  endPoint: END_POINT,
+  authorization: AUTHORIZATION
+});
 const FILTERS = [
   {
     name: `All`,
@@ -33,7 +39,6 @@ const FILTERS = [
   }
 ];
 
-const initialTasks = getTasks(7);
 const filtersContainer = document.querySelector(`.main__filter`);
 const taskContainer = document.querySelector(`.board__tasks`);
 const statButtonElement = document.querySelector(`#control__statistic`);
@@ -131,7 +136,11 @@ FILTERS.forEach((item) => {
   };
 });
 
-initialTasks.forEach(renderTask);
+const initialTasks = api.getTasks()
+.then((tasks) => {
+  tasks.forEach(renderTask);
+  return tasks;
+});
 
 statButtonElement.addEventListener(`click`, onStatClick);
 tasksButtonElement.addEventListener(`click`, onTasksClick);
