@@ -1,3 +1,5 @@
+import ModelTask from "./model-task";
+
 const Method = {
   GET: `GET`,
   POST: `POST`,
@@ -25,7 +27,8 @@ const API = class {
 
   getTasks() {
     return this._load({url: `tasks`})
-    .then(toJSON);
+    .then(toJSON)
+    .then(ModelTask.parseTasks);
   }
 
   createTask({task}) {
@@ -37,7 +40,8 @@ const API = class {
         'Content-Type': `application/json`
       })
     })
-    .then(toJSON);
+    .then(toJSON)
+    .then(ModelTask.parseTask);
   }
 
   updateTask({id, data}) {
@@ -49,7 +53,8 @@ const API = class {
         'Content-Type': `application/json`
       })
     })
-    .then(toJSON);
+    .then(toJSON)
+    .then(ModelTask.parseTask);
   }
 
   deleteTask({id}) {
