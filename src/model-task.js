@@ -1,8 +1,11 @@
+import moment from 'moment';
+
 export default class ModelTask {
   constructor(data) {
     this.id = data[`id`];
     this.title = data[`title`] || ``;
     this.dueDate = new Date(data[`due_date`]);
+    this.dueTime = moment(new Date(data[`due_date`])).format(`H:mm a`);
     this.tags = new Set(data[`tags`] || []);
     this.picture = data[`picture`] || ``;
     this.repeatingDays = data[`repeating_days`];

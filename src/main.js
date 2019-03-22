@@ -39,6 +39,8 @@ const FILTERS = [
   }
 ];
 
+let initialTasks = [];
+
 const filtersContainer = document.querySelector(`.main__filter`);
 const taskContainer = document.querySelector(`.board__tasks`);
 const statButtonElement = document.querySelector(`#control__statistic`);
@@ -136,10 +138,10 @@ FILTERS.forEach((item) => {
   };
 });
 
-const initialTasks = api.getTasks()
+api.getTasks()
 .then((tasks) => {
-  tasks.forEach(renderTask);
-  return tasks;
+  initialTasks = tasks;
+  initialTasks.forEach(renderTask);
 });
 
 statButtonElement.addEventListener(`click`, onStatClick);
