@@ -76,6 +76,7 @@ const renderTask = (item) => {
   };
 
   editTaskComponent.onSubmit = (obj) => {
+    const editTaskComponentWrap = document.querySelector(`.card__inner`);
     const block = () => {
       editTaskComponent.element.querySelector(`.card__save`).disabled = true;
       editTaskComponent.element.querySelector(`.card__save`).textContent = `saving`;
@@ -101,6 +102,7 @@ const renderTask = (item) => {
       editTaskComponent.unrender();
     })
     .catch(() => {
+      editTaskComponentWrap.style.border = `1px solid red`;
       editTaskComponent.shake();
       unblock();
     });
