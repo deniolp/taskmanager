@@ -176,6 +176,9 @@ api.getTasks()
   removeEmptyBoard();
   initialTasks = tasks;
   initialTasks.forEach(renderTask);
+})
+.catch(() => {
+  emptyBoard.textContent = `Something went wrong while loading your tasks. Check your connection or try again later`;
 });
 
 statButtonElement.addEventListener(`click`, onStatClick);
