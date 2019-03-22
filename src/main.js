@@ -75,10 +75,22 @@ const renderTask = (item) => {
   };
 
   editTaskComponent.onSubmit = (obj) => {
+    const block = () => {
+      editTaskComponent.element.querySelector(`.card__save`).disabled = true;
+      editTaskComponent.element.querySelector(`.card__text`).disabled = true;
+    };
+
+    const unblock = () => {
+      editTaskComponent.element.querySelector(`.card__save`).disabled = false;
+      editTaskComponent.element.querySelector(`.card__text`).disabled = false;
+    };
+
     const updatedTask = updateTask(item, obj);
 
+    block();
     api.updateTask({id: updatedTask.id, data: updatedTask.toRAW()})
     .then((newTask) => {
+      unblock();
       taskComponent.update(newTask);
       taskComponent.render();
 
