@@ -5,7 +5,7 @@ import {Task} from './task';
 import {TaskEdit} from './task-edit';
 import {API} from './api';
 
-const AUTHORIZATION = `Basic kjdwhiuygtd68^%*&hkdhwu`;
+const AUTHORIZATION = `Basic kjdwiul8^%*&hkdhwu`;
 const END_POINT = `https://es8-demo-srv.appspot.com/task-manager/`;
 const api = new API({
   endPoint: END_POINT,
@@ -54,6 +54,20 @@ const renderTask = (item) => {
   const editTaskComponent = new TaskEdit(item);
   taskContainer.appendChild(taskComponent.render());
 
+  const block = () => {
+    editTaskComponent.element.querySelector(`.card__save`).disabled = true;
+    editTaskComponent.element.querySelector(`.card__text`).disabled = true;
+    editTaskComponent.element.querySelector(`.card__delete`).disabled = true;
+  };
+
+  const unblock = () => {
+    editTaskComponent.element.querySelector(`.card__save`).disabled = false;
+    editTaskComponent.element.querySelector(`.card__delete`).disabled = false;
+    editTaskComponent.element.querySelector(`.card__text`).disabled = false;
+    editTaskComponent.element.querySelector(`.card__save`).textContent = `save`;
+    editTaskComponent.element.querySelector(`.card__delete`).textContent = `delete`;
+  };
+
   taskComponent.onEdit = () => {
     editTaskComponent.render();
     taskContainer.replaceChild(editTaskComponent.element, taskComponent.element);
@@ -61,37 +75,33 @@ const renderTask = (item) => {
   };
 
   editTaskComponent.onDelete = ({id}) => {
+    block();
+    editTaskComponent.element.querySelector(`.card__delete`).textContent = `deleting`;
+
     api.deleteTask({id})
     .then(() => api.getTasks())
     .then((tasks) => {
+      unblock();
       taskContainer.innerHTML = ``;
       initialTasks = tasks;
       initialTasks.forEach(renderTask);
     })
     .catch((error) => {
+      unblock();
+      editTaskComponent.element.querySelector(`.card__inner`).style.border = `1px solid red`;
+      editTaskComponent.shake();
       // eslint-disable-next-line no-console
       console.log(error);
+      editTaskComponent.element.querySelector(`.card__inner`).style.border = `1px solid #000000`;
       throw error;
     });
   };
 
   editTaskComponent.onSubmit = (obj) => {
-    const editTaskComponentWrap = document.querySelector(`.card__inner`);
-    const block = () => {
-      editTaskComponent.element.querySelector(`.card__save`).disabled = true;
-      editTaskComponent.element.querySelector(`.card__save`).textContent = `saving`;
-      editTaskComponent.element.querySelector(`.card__text`).disabled = true;
-    };
-
-    const unblock = () => {
-      editTaskComponent.element.querySelector(`.card__save`).disabled = false;
-      editTaskComponent.element.querySelector(`.card__save`).textContent = `save`;
-      editTaskComponent.element.querySelector(`.card__text`).disabled = false;
-    };
-
     const updatedTask = updateTask(item, obj);
 
     block();
+    editTaskComponent.element.querySelector(`.card__save`).textContent = `saving`;
     api.updateTask({id: updatedTask.id, data: updatedTask.toRAW()})
     .then((newTask) => {
       unblock();
@@ -102,9 +112,10 @@ const renderTask = (item) => {
       editTaskComponent.unrender();
     })
     .catch(() => {
-      editTaskComponentWrap.style.border = `1px solid red`;
-      editTaskComponent.shake();
       unblock();
+      editTaskComponent.element.querySelector(`.card__inner`).style.border = `1px solid red`;
+      editTaskComponent.shake();
+      editTaskComponent.element.querySelector(`.card__inner`).style.border = `1px solid #000000`;
     });
   };
 };
