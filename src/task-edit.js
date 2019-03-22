@@ -331,7 +331,7 @@ class TaskEdit extends Component {
 
   _onDeleteClick() {
     if (typeof this._onDelete === `function`) {
-      this._onDelete();
+      this._onDelete({id: this._id});
     }
   }
 

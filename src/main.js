@@ -5,7 +5,7 @@ import {Task} from './task';
 import {TaskEdit} from './task-edit';
 import {API} from './api';
 
-const AUTHORIZATION = `Basic kjdwhiu3ye7833&^%*&hkdhwu`;
+const AUTHORIZATION = `Basic kjdwhiuygtd68^%*&hkdhwu`;
 const END_POINT = `https://es8-demo-srv.appspot.com/task-manager/`;
 const api = new API({
   endPoint: END_POINT,
@@ -59,11 +59,19 @@ const renderTask = (item) => {
     taskComponent.unrender();
   };
 
-  editTaskComponent.onDelete = () => {
-    deleteTask(item);
-
-    taskContainer.removeChild(editTaskComponent.element);
-    editTaskComponent.unrender();
+  editTaskComponent.onDelete = ({id}) => {
+    api.deleteTask({id})
+    .then(() => api.getTasks())
+    .then((tasks) => {
+      taskContainer.innerHTML = ``;
+      initialTasks = tasks;
+      initialTasks.forEach(renderTask);
+    })
+    .catch((error) => {
+      // eslint-disable-next-line no-console
+      console.log(error);
+      throw error;
+    });
   };
 
   editTaskComponent.onSubmit = (obj) => {
