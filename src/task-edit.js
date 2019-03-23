@@ -33,7 +33,7 @@ class TaskEdit extends Component {
     this._color = color;
     this._repeatingDays = repeatingDays;
     this._state = {
-      isDate: false,
+      isDate: dueDate && dueTime,
       isRepeated: this._isRepeated(),
     };
 
@@ -287,6 +287,10 @@ class TaskEdit extends Component {
 
   _onChangeDate() {
     this._state.isDate = !this._state.isDate;
+    if (!this._state.isDate) {
+      this._dueDate = null;
+      this._dueTime = null;
+    }
     this._removeListeners();
     this._partialUpdate();
     this._addListeners();
@@ -327,7 +331,7 @@ class TaskEdit extends Component {
 
   _onDeleteClick() {
     if (typeof this._onDelete === `function`) {
-      this._onDelete();
+      this._onDelete({id: this._id});
     }
   }
 
@@ -348,7 +352,7 @@ class TaskEdit extends Component {
         altInput: true,
         altFormat: `j F`,
         dateFormat: `j F`,
-        defaultDate: moment(this._dueDate).format(`DD MMMM`),
+        defaultDate: moment(this._dueDate || new Date()).format(`DD MMMM`),
       });
       flatpickr(timeInputElement, {
         enableTime: true,
@@ -356,7 +360,7 @@ class TaskEdit extends Component {
         altInput: true,
         altFormat: `h:i K`,
         dateFormat: `h:i K`,
-        defaultDate: this._dueTime,
+        defaultDate: this._dueTime || new Date(),
       });
     }
   }
@@ -387,6 +391,15 @@ class TaskEdit extends Component {
     if (data.dueTime) {
       this._dueTime = data.dueTime;
     }
+  }
+
+  shake() {
+    const ANIMATION_TIMEOUT = 800;
+    this._element.style.animation = `shake ${ANIMATION_TIMEOUT / 1000}s`;
+
+    setTimeout(() => {
+      this._element.style.animation = ``;
+    }, ANIMATION_TIMEOUT);
   }
 
   static createMapper(target) {
