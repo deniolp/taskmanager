@@ -1,6 +1,6 @@
 import {Filter} from './filter';
 import moment from 'moment';
-import {drawStat} from './draw-stat';
+import {drawStat, urenderStat} from './draw-stat';
 import {Task} from './task';
 import {TaskEdit} from './task-edit';
 import {API} from './api';
@@ -158,6 +158,7 @@ const onStatClick = () => {
 };
 
 const onTasksClick = () => {
+  urenderStat();
   statBoard.classList.add(`visually-hidden`);
   taskBoard.classList.remove(`visually-hidden`);
 };
