@@ -77,6 +77,7 @@ const renderTask = (item) => {
   editTaskComponent.onDelete = ({id}) => {
     block();
     editTaskComponent.element.querySelector(`.card__delete`).textContent = `deleting`;
+    editTaskComponent.element.querySelector(`.card__inner`).style.border = `1px solid #000000`;
 
     api.deleteTask({id})
     .then(() => api.getTasks())
@@ -89,10 +90,9 @@ const renderTask = (item) => {
     .catch((error) => {
       unblock();
       editTaskComponent.element.querySelector(`.card__inner`).style.border = `1px solid red`;
-      editTaskComponent.shake();
+      shakeElement(editTaskComponent.element.querySelector(`.card__inner`));
       // eslint-disable-next-line no-console
       console.log(error);
-      editTaskComponent.element.querySelector(`.card__inner`).style.border = `1px solid #000000`;
       throw error;
     });
   };
@@ -102,6 +102,7 @@ const renderTask = (item) => {
 
     block();
     editTaskComponent.element.querySelector(`.card__save`).textContent = `saving`;
+    editTaskComponent.element.querySelector(`.card__inner`).style.border = `1px solid #000000`;
     api.updateTask({id: updatedTask.id, data: updatedTask.toRAW()})
     .then((newTask) => {
       unblock();
@@ -114,10 +115,20 @@ const renderTask = (item) => {
     .catch(() => {
       unblock();
       editTaskComponent.element.querySelector(`.card__inner`).style.border = `1px solid red`;
-      editTaskComponent.shake();
-      editTaskComponent.element.querySelector(`.card__inner`).style.border = `1px solid #000000`;
+      shakeElement(editTaskComponent.element.querySelector(`.card__inner`));
     });
   };
+};
+
+const shakeElement = (element) => {
+  element.animate([
+    {transform: `translateX(0)`},
+    {transform: `translateX(-10px)`},
+    {transform: `translateX(10px)`}
+  ], {
+    duration: 100,
+    iterations: 5,
+  });
 };
 
 const updateTask = (taskToUpdate, newTask) => {
