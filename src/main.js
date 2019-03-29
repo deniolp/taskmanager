@@ -5,14 +5,17 @@ import {Task} from './task';
 import {TaskEdit} from './task-edit';
 import {API} from './api';
 import {Provider} from './provider';
+import {Store} from './store';
 
 const AUTHORIZATION = `Basic kjdwiul8^%*&hkdhwu`;
 const END_POINT = `https://es8-demo-srv.appspot.com/task-manager/`;
+const TASKS_STORE_KEY = `tasks-store-key`;
 const api = new API({
   endPoint: END_POINT,
   authorization: AUTHORIZATION
 });
-const provider = new Provider({api});
+const store = new Store({key: TASKS_STORE_KEY, storage: localStorage});
+const provider = new Provider({api, store});
 const FILTERS = [
   {
     name: `All`,
