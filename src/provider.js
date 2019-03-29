@@ -72,6 +72,10 @@ const Provider = class {
     }
   }
 
+  syncTasks() {
+    return this._api.syncTasks({tasks: objectToArray(this._store.getAll())});
+  }
+
   _isOnline() {
     return window.navigator.onLine;
   }

@@ -188,6 +188,14 @@ const removeEmptyBoard = () => {
   emptyBoard.classList.add(`visually-hidden`);
 };
 
+window.addEventListener(`offline`, () => {
+  document.title = `${document.title}[OFFLINE]`;
+});
+window.addEventListener(`online`, () => {
+  document.title = document.title.split(`[OFFLINE]`)[0];
+  provider.syncTasks();
+});
+
 FILTERS.forEach((item) => {
   const filterComponent = new Filter(item.name, item.isChecked, item.isDisabled);
   filtersContainer.appendChild(filterComponent.render());
