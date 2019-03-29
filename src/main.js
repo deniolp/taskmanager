@@ -4,6 +4,7 @@ import {drawStat, urenderStat} from './draw-stat';
 import {Task} from './task';
 import {TaskEdit} from './task-edit';
 import {API} from './api';
+import {Provider} from './provider';
 
 const AUTHORIZATION = `Basic kjdwiul8^%*&hkdhwu`;
 const END_POINT = `https://es8-demo-srv.appspot.com/task-manager/`;
@@ -11,7 +12,7 @@ const api = new API({
   endPoint: END_POINT,
   authorization: AUTHORIZATION
 });
-const provider = new Provider({api, store});
+const provider = new Provider({api});
 const FILTERS = [
   {
     name: `All`,
