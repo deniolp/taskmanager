@@ -160,8 +160,12 @@ const drawStat = (tasks) => {
 };
 
 const urenderStat = () => {
-  tagsChart.destroy();
-  colorsChart.destroy();
+  if (tagsChart) {
+    tagsChart.destroy();
+  }
+  if (tagsChart) {
+    colorsChart.destroy();
+  }
 };
 
 const filterTasks = (fistDate, secondDate, tasks) => {
