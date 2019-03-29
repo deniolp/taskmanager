@@ -15,7 +15,7 @@ const api = new API({
   authorization: AUTHORIZATION
 });
 const store = new Store({key: TASKS_STORE_KEY, storage: localStorage});
-const provider = new Provider({api, store});
+const provider = new Provider({api, store, generateId: () => String(Date.now())});
 const FILTERS = [
   {
     name: `All`,

@@ -3,6 +3,7 @@ const Store = class {
     this._storage = storage;
     this._storeKey = key;
   }
+
   setItem({key, item}) {
     const items = this.getAll();
     items[key] = item;
