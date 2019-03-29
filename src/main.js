@@ -11,6 +11,7 @@ const api = new API({
   endPoint: END_POINT,
   authorization: AUTHORIZATION
 });
+const provider = new Provider({api, store});
 const FILTERS = [
   {
     name: `All`,
@@ -79,8 +80,8 @@ const renderTask = (item) => {
     editTaskComponent.element.querySelector(`.card__delete`).textContent = `deleting`;
     editTaskComponent.element.querySelector(`.card__inner`).style.border = `1px solid #000000`;
 
-    api.deleteTask({id})
-    .then(() => api.getTasks())
+    provider.deleteTask({id})
+    .then(() => provider.getTasks())
     .then((tasks) => {
       unblock();
       taskContainer.innerHTML = ``;
@@ -103,7 +104,7 @@ const renderTask = (item) => {
     block();
     editTaskComponent.element.querySelector(`.card__save`).textContent = `saving`;
     editTaskComponent.element.querySelector(`.card__inner`).style.border = `1px solid #000000`;
-    api.updateTask({id: updatedTask.id, data: updatedTask.toRAW()})
+    provider.updateTask({id: updatedTask.id, data: updatedTask.toRAW()})
     .then((newTask) => {
       unblock();
       taskComponent.update(newTask);
@@ -198,7 +199,7 @@ FILTERS.forEach((item) => {
 
 showEmptyBoard();
 
-api.getTasks()
+provider.getTasks()
 .then((tasks) => {
   removeEmptyBoard();
   initialTasks = tasks;
