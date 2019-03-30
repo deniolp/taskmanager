@@ -17,8 +17,16 @@ self.addEventListener(`install`, (evt) => {
         `css/flatpickr.min.css`,
         `css/normalize.css`,
         `css/style.css`,
-        `fonts/`,
-        `img/`,
+        `fonts/HelveticaNeueCyr-Bold.woff`,
+        `fonts/HelveticaNeueCyr-Bold.woff2`,
+        `fonts/HelveticaNeueCyr-Medium.woff`,
+        `fonts/HelveticaNeueCyr-Medium.woff2`,
+        `fonts/HelveticaNeueCyr-Roman.woff`,
+        `fonts/HelveticaNeueCyr-Roman.woff2`,
+        `img/add-photo.svg`,
+        `img/close.svg`,
+        `img/sample-img.svg`,
+        `img/wave.svg`,
       ]);
     });
 
