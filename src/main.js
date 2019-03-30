@@ -1,16 +1,21 @@
 import {Filter} from './filter';
 import moment from 'moment';
-import {drawStat} from './draw-stat';
+import {drawStat, urenderStat} from './draw-stat';
 import {Task} from './task';
 import {TaskEdit} from './task-edit';
 import {API} from './api';
+import {Provider} from './provider';
+import {Store} from './store';
 
 const AUTHORIZATION = `Basic kjdwiul8^%*&hkdhwu`;
 const END_POINT = `https://es8-demo-srv.appspot.com/task-manager/`;
+const TASKS_STORE_KEY = `tasks-store-key`;
 const api = new API({
   endPoint: END_POINT,
   authorization: AUTHORIZATION
 });
+const store = new Store({key: TASKS_STORE_KEY, storage: localStorage});
+const provider = new Provider({api, store, generateId: () => String(Date.now())});
 const FILTERS = [
   {
     name: `All`,
@@ -77,9 +82,10 @@ const renderTask = (item) => {
   editTaskComponent.onDelete = ({id}) => {
     block();
     editTaskComponent.element.querySelector(`.card__delete`).textContent = `deleting`;
+    editTaskComponent.element.querySelector(`.card__inner`).style.border = `1px solid #000000`;
 
-    api.deleteTask({id})
-    .then(() => api.getTasks())
+    provider.deleteTask({id})
+    .then(() => provider.getTasks())
     .then((tasks) => {
       unblock();
       taskContainer.innerHTML = ``;
@@ -89,10 +95,9 @@ const renderTask = (item) => {
     .catch((error) => {
       unblock();
       editTaskComponent.element.querySelector(`.card__inner`).style.border = `1px solid red`;
-      editTaskComponent.shake();
+      shakeElement(editTaskComponent.element.querySelector(`.card__inner`));
       // eslint-disable-next-line no-console
       console.log(error);
-      editTaskComponent.element.querySelector(`.card__inner`).style.border = `1px solid #000000`;
       throw error;
     });
   };
@@ -102,7 +107,8 @@ const renderTask = (item) => {
 
     block();
     editTaskComponent.element.querySelector(`.card__save`).textContent = `saving`;
-    api.updateTask({id: updatedTask.id, data: updatedTask.toRAW()})
+    editTaskComponent.element.querySelector(`.card__inner`).style.border = `1px solid #000000`;
+    provider.updateTask({id: updatedTask.id, data: updatedTask.toRAW()})
     .then((newTask) => {
       unblock();
       taskComponent.update(newTask);
@@ -114,10 +120,20 @@ const renderTask = (item) => {
     .catch(() => {
       unblock();
       editTaskComponent.element.querySelector(`.card__inner`).style.border = `1px solid red`;
-      editTaskComponent.shake();
-      editTaskComponent.element.querySelector(`.card__inner`).style.border = `1px solid #000000`;
+      shakeElement(editTaskComponent.element.querySelector(`.card__inner`));
     });
   };
+};
+
+const shakeElement = (element) => {
+  element.animate([
+    {transform: `translateX(0)`},
+    {transform: `translateX(-10px)`},
+    {transform: `translateX(10px)`}
+  ], {
+    duration: 100,
+    iterations: 5,
+  });
 };
 
 const updateTask = (taskToUpdate, newTask) => {
@@ -158,6 +174,7 @@ const onStatClick = () => {
 };
 
 const onTasksClick = () => {
+  urenderStat();
   statBoard.classList.add(`visually-hidden`);
   taskBoard.classList.remove(`visually-hidden`);
 };
@@ -170,6 +187,14 @@ const showEmptyBoard = () => {
 const removeEmptyBoard = () => {
   emptyBoard.classList.add(`visually-hidden`);
 };
+
+window.addEventListener(`offline`, () => {
+  document.title = `${document.title}[OFFLINE]`;
+});
+window.addEventListener(`online`, () => {
+  document.title = document.title.split(`[OFFLINE]`)[0];
+  provider.syncTasks();
+});
 
 FILTERS.forEach((item) => {
   const filterComponent = new Filter(item.name, item.isChecked, item.isDisabled);
@@ -186,7 +211,7 @@ FILTERS.forEach((item) => {
 
 showEmptyBoard();
 
-api.getTasks()
+provider.getTasks()
 .then((tasks) => {
   removeEmptyBoard();
   initialTasks = tasks;

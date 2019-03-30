@@ -22,20 +22,18 @@ const Colors = {
   pink: `#ff3cb9`,
 };
 
-const onCloseDate = (selectedDates, tasks) => {
+const updateChart = (selectedDates, tasks) => {
   const tagsStat = getTagStat(selectedDates[0], selectedDates[1], tasks);
   const colorsStat = getColorStat(selectedDates[0], selectedDates[1], tasks);
-  updateChart(tagsChart, tagsStat.labels, tagsStat.values);
-  updateChart(colorsChart, colorsStat.labels, colorsStat.values, colorsStat.backgrounds);
-};
 
-const updateChart = (chart, labels, values, backgrounds = false) => {
-  chart.data.labels = labels;
-  chart.data.datasets[0].data = values;
-  if (backgrounds) {
-    chart.data.datasets[0].backgroundColor = backgrounds;
-  }
-  chart.update();
+  tagsChart.data.labels = tagsStat.labels;
+  colorsChart.data.labels = colorsStat.labels;
+  tagsChart.data.datasets[0].data = tagsStat.values;
+  colorsChart.data.datasets[0].data = colorsStat.values;
+  colorsChart.data.datasets[0].backgroundColor = colorsStat.backgrounds;
+
+  tagsChart.update();
+  colorsChart.update();
 };
 
 const drawStat = (tasks) => {
@@ -43,7 +41,7 @@ const drawStat = (tasks) => {
     mode: `range`,
     dateFormat: `d-M`,
     defaultDate: [firstDay.format(`DD MMM`), lastDay.format(`DD MMM`)],
-    onClose: (dates) => onCloseDate(dates, tasks),
+    onClose: (dates) => updateChart(dates, tasks),
   });
 
   tagsWrap.classList.remove(`visually-hidden`);
@@ -161,6 +159,15 @@ const drawStat = (tasks) => {
   });
 };
 
+const urenderStat = () => {
+  if (tagsChart) {
+    tagsChart.destroy();
+  }
+  if (tagsChart) {
+    colorsChart.destroy();
+  }
+};
+
 const filterTasks = (fistDate, secondDate, tasks) => {
   const filteredTasks = tasks.filter((task) => {
     return task.dueDate > moment(fistDate).format(`x`) && task.dueDate < moment(secondDate).format(`x`);
@@ -205,4 +212,4 @@ const getColorStat = (fistDate, secondDate, tasks) => {
 
 };
 
-export {drawStat};
+export {drawStat, urenderStat};
