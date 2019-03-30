@@ -6,6 +6,14 @@ self.addEventListener(`install`, (evt) => {
     .then((cache) => {
       return cache.addAll([
         `/`,
+        `/index.html`,
+        `/bundle.js`,
+        `/bundle.js.map`,
+        `/css/flatpickr.min.js`,
+        `/css/normalize.css`,
+        `/css/style.css`,
+        `/fonts/`,
+        `/img/`,
       ]);
     });
 
