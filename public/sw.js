@@ -1,11 +1,11 @@
 /* eslint-disable no-console */
-const CACHE_NAME = `STATIC_V1.0`;
+const CACHE_NAME = `STATIC_TASKMANAGER_V1.0`;
 
 self.addEventListener(`install`, (evt) => {
   const openCache = caches.open(CACHE_NAME)
     .then((cache) => {
       return cache.addAll([
-        `/505149-taskmanager-8/10/`,
+        `/`,
       ]);
     });
 
