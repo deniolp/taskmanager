@@ -25,7 +25,7 @@ self.addEventListener(`install`, (evt) => {
         `fonts/HelveticaNeueCyr-Roman.woff2`,
         `img/add-photo.svg`,
         `img/close.svg`,
-        `img/sample-img.svg`,
+        `img/sample-img.jpg`,
         `img/wave.svg`,
       ]);
     });
