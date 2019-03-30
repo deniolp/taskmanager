@@ -1,19 +1,24 @@
 /* eslint-disable no-console */
 const CACHE_NAME = `STATIC_TASKMANAGER_V1.0`;
 
+
+let path = `/505149-taskmanager-8/10/`;
+if (location.host === `localhost:8081`) {
+  path = `/`;
+}
 self.addEventListener(`install`, (evt) => {
   const openCache = caches.open(CACHE_NAME)
     .then((cache) => {
       return cache.addAll([
-        `/`,
-        `/index.html`,
-        `/bundle.js`,
-        `/bundle.js.map`,
-        `/css/flatpickr.min.js`,
-        `/css/normalize.css`,
-        `/css/style.css`,
-        `/fonts/`,
-        `/img/`,
+        path,
+        `index.html`,
+        `bundle.js`,
+        `bundle.js.map`,
+        `css/flatpickr.min.js`,
+        `css/normalize.css`,
+        `css/style.css`,
+        `fonts/`,
+        `img/`,
       ]);
     });
 
