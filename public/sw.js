@@ -14,7 +14,7 @@ self.addEventListener(`install`, (evt) => {
         `index.html`,
         `bundle.js`,
         `bundle.js.map`,
-        `css/flatpickr.min.js`,
+        `css/flatpickr.min.css`,
         `css/normalize.css`,
         `css/style.css`,
         `fonts/`,
