@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-let path = `/505149-taskmanager-8/10/`;
+let path = `/taskmanager/`;
 if (location.host === `localhost:8081`) {
   path = `/`;
 }
