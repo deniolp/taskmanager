@@ -8,7 +8,7 @@ import {Provider} from './provider';
 import {Store} from './store';
 
 const AUTHORIZATION = `Basic kjdwiul8^%*&kdhwu`;
-const END_POINT = `https://es8-demo-srv.appspot.com/task-manager`;
+const END_POINT = `https://16.ecmascript.pages.academy/task-manager`;
 const TASKS_STORE_KEY = `tasks-store-key`;
 const api = new API({
   endPoint: END_POINT,
