@@ -36743,7 +36743,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 const AUTHORIZATION = `Basic kjdwiul8^%*&kdhwu`;
-const END_POINT = `https://es8-demo-srv.appspot.com/task-manager`;
+const END_POINT = `https://16.ecmascript.pages.academy/task-manager`;
 const TASKS_STORE_KEY = `tasks-store-key`;
 const api = new _api__WEBPACK_IMPORTED_MODULE_5__["API"]({
   endPoint: END_POINT,
